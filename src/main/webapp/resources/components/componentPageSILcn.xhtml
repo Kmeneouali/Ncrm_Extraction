@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.org/ui">
+
+<composite:interface>
+	<composite:attribute name="header" />
+	<composite:attribute name="nameLabledatetr" />
+	<composite:attribute name="datetr" />
+
+	<composite:attribute name="extraireSILcnButtonText" />
+	<composite:attribute name="extraireSILcnButtonAction"
+		method-signature="void action(java.lang.String)" />
+	<composite:attribute name="listRems" />
+	 <composite:attribute name="update" />
+
+
+</composite:interface>
+
+<composite:implementation>
+
+
+	
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="images/progressbar.gif" />
+		</p:dialog>
+
+
+		<!-- Panel 1 -->
+
+		<p:panel id="horizontal" header="#{cc.attrs.header}" toggleable="true" style="  margin-bottom:5px">
+
+			<!-- Panel Searsh  -->
+			<p:panelGrid id="panel" style="margin: 0 auto;">
+
+				<p:row>
+
+					<p:column style="border-color: #ffffff ;">
+						<p:outputLabel value="#{cc.attrs.nameLabledatetr}" />
+					</p:column>
+					<p:column style="border-color: #ffffff ;">
+						<p:calendar id="button" value="#{cc.attrs.datetr}"
+							pattern="dd-MM-yyyy" mask="true" />
+					</p:column>
+
+
+
+					<p:column style="border-color: #ffffff ;">
+						<p:commandButton icon="ui-icon-arrowthickstop-1-s"
+							value="#{cc.attrs.extraireSILcnButtonText}" style=""
+							title="#{cc.attrs.extraireSILcnButtonText}"
+							actionListener="#{cc.attrs.extraireSILcnButtonAction}"
+							update="#{cc.attrs.update}">
+							
+						</p:commandButton>
+
+
+
+
+					</p:column>
+
+				</p:row>
+
+			</p:panelGrid>
+
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="false"
+				style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%" />
+
+
+
+
+
+			<p:dataTable id="listSIrem" var="rem"
+				value="#{ExtractionSI_LcnBPMBean.listRems}" emptyMessage=""
+				rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+
+				<p:column headerText="#{commun['NumcptRem']}"
+					style="text-align: center;">
+					<h:outputText value="#{rem.bmtr_CDECLT}" />
+				</p:column>
+
+
+				<p:column headerText="#{commun['NumRemise']}"
+					style="text-align: center;">
+					<h:outputText value="#{rem.bmtr_NSER}" />
+				</p:column>
+
+				<p:column headerText="#{commun['NbrLCN']}"
+					style="text-align: center;">
+					<h:outputText value="#{rem.bmtr_NBCH}" />
+				</p:column>
+
+				<p:column headerText="#{commun['MntTotal']}"
+					style="text-align: center;">
+					<h:outputText value="#{rem.bmtr_MNTREEL}" />
+				</p:column>
+
+
+
+
+			</p:dataTable>
+
+		</p:panel>
+
+
+
+
+
+
+
+</composite:implementation>
+
+</html>

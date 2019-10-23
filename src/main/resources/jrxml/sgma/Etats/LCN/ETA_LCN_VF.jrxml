@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ETA_LCN_VF" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="822" leftMargin="10" rightMargin="10" topMargin="20" bottomMargin="20" uuid="f2daf937-9dc6-4078-8c68-2417cda7768b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FAEBD7">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFE4BF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<pen lineStyle="Dashed"/>
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="dateInstance" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pointCapture" class="java.lang.String"/>
+	<parameter name="cdepointCapture" class="java.lang.String"/>
+	<parameter name="age_rattachement" class="java.lang.String"/>
+	<parameter name="flag_scan_gr" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+    bmlcn_AGE_SCAN,
+    BMTN_lecteur,
+    BMTR_age,
+    BMTR_CPT,
+    BMTR_NSER,
+    BMTR_MNT+0 BMTR_MNT,
+    bmlcn_NSER,
+    concat(bmlcn_ZBK,bmlcn_LOC,bmlcn_CPT,bmlcn_RIB) as cpt_tire,
+    bmlcn_MNT+0 bmlcn_MNT,
+    concat(SUBSTRING(bmlcn_CODE_ERREURS,1,4),"|",SUBSTRING(bmlcn_CODE_ERREURS,5,8),"|",SUBSTRING(bmlcn_CODE_ERREURS,9,12)) bmlcn_CODE_ERREURS,
+    bmlcn_SQCA
+FROM
+    r_ncrm_extraction.tmp_tbl_eta_lcn_sgma
+
+Where (bmlcn_CONF='0' and bmlcn_CODE_ERREURS!='ABOP')
+ and bmlcn_ope_eta<>'D'
+ and BMtr_ope_eta<>'D'
+
+and STR_TO_DATE(date, '%Y-%m-%d')=$P{dateInstance}
+ and bmtn_lecteur=$P{cdepointCapture}
+ and bmlcn_FLAG_SCAN_GR=$P{flag_scan_gr}
+order by bmtr_age]]>
+	</queryString>
+	<field name="bmlcn_AGE_SCAN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BMTN_lecteur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BMTR_age" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BMTR_CPT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BMTR_NSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BMTR_MNT" class="java.lang.Double"/>
+	<field name="bmlcn_NSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cpt_tire" class="java.lang.String"/>
+	<field name="bmlcn_MNT" class="java.lang.Double"/>
+	<field name="bmlcn_CODE_ERREURS" class="java.lang.String"/>
+	<field name="bmlcn_SQCA" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="BMTR_MNT_1" class="java.lang.Double" resetType="Group" resetGroup="BMTR_AGE" calculation="Sum">
+		<variableExpression><![CDATA[$F{BMTR_MNT}]]></variableExpression>
+	</variable>
+	<variable name="bmlcn_MNT_1" class="java.lang.Double" resetType="Group" resetGroup="BMTR_AGE" calculation="Sum">
+		<variableExpression><![CDATA[$F{bmlcn_MNT}]]></variableExpression>
+	</variable>
+	<variable name="bmlcn_NSER_1" class="java.lang.Integer" resetType="Group" resetGroup="BMTR_AGE" calculation="Count">
+		<variableExpression><![CDATA[$F{bmlcn_NSER}]]></variableExpression>
+	</variable>
+	<variable name="bmlcn_NSER_2" class="java.lang.Integer" resetType="Group" resetGroup="BMTN_LECTEUR" calculation="Count">
+		<variableExpression><![CDATA[$F{bmlcn_NSER}]]></variableExpression>
+	</variable>
+	<variable name="bmlcn_MNT_2" class="java.lang.Double" resetType="Group" resetGroup="BMTN_LECTEUR" calculation="Sum">
+		<variableExpression><![CDATA[$F{bmlcn_MNT}]]></variableExpression>
+	</variable>
+	<group name="BMTN_LECTEUR">
+		<groupExpression><![CDATA[$F{BMTN_lecteur}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="116" y="0" width="43" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="8fa9e28f-5d8d-4372-8ae8-1f6194e631a8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° Remise]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="159" y="0" width="71" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="13c5d2f4-44b2-47cf-a7df-d3cd78996a95"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Montant  Remise]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="273" y="0" width="140" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="ae371a23-c7f2-4360-95e0-7c810f5d736c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° Compte tiré]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="453" y="0" width="86" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="3074efd5-3199-4d5e-9f7f-ecfc424afbf4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Montant lcn]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="539" y="0" width="277" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="8c32fc48-73df-4a75-9ee6-010ebee7e613"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Motif(s)  de rejet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="50" y="0" width="66" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="cb6885f2-c1bf-4284-bd77-4719dd2bb784"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Compte
+Remettant]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="4" y="0" width="46" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="f93b0c2b-3247-4cf7-b4e6-08d2fcd1936a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Age
+Remettant]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="230" y="0" width="43" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="f6f2b4ec-4d3d-48b3-9a23-c4890cb0b448"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° lcn]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="413" y="0" width="40" height="20" forecolor="#FFFFFF" backcolor="#009EE0" uuid="d69d0e26-c116-4d4e-a0be-38de91c2d1df"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7" isBold="true"/>
+					</textElement>
+					<text><![CDATA[N° séq]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="36">
+				<staticText>
+					<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="301" y="1" width="238" height="15" forecolor="#FFFFFF" backcolor="#009EE0" uuid="00d8f910-a0a5-4a10-bf2c-c59ac14f4aa0"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<text><![CDATA[Nombre Total des vices de forme]]></text>
+				</staticText>
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="539" y="16" width="277" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="4faf5978-c8a0-4a6e-9ac2-2edbb8f35652"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{bmlcn_MNT_2}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="539" y="1" width="277" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="5de9fe9f-c6cf-4523-b806-9c7f3404ad6f"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{bmlcn_NSER_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="301" y="16" width="238" height="15" forecolor="#FFFFFF" backcolor="#009EE0" uuid="8fbebfd0-8d61-422a-8ada-55c8b1895a53"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<text><![CDATA[Montant Total des vices de forme]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="BMTR_AGE" keepTogether="true">
+		<groupExpression><![CDATA[$F{BMTR_age}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="285" y="49" width="143" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="e9b8a248-4b9d-4870-aca1-4c235708efe8"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Date de Traitement : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="31" width="290" height="18" uuid="3271eab7-8ec7-4921-b8ff-ac21476a21a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Etat des valeurs LCN rejetées - vices de formes]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="428" y="49" width="86" height="19" forecolor="#000000" backcolor="#FFFFFF" uuid="0a65988c-d232-4bf6-b12e-add9ad09c03a"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateInstance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-297" y="26" width="252" height="30" uuid="d610cc4c-76f4-4fa4-86b6-1eb8b57669ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Candara" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Etat detaillé des remises chèques  annulées
+ GRMT ratachés à l'agence
+]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="-141" y="56" width="61" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="f527860a-9bd8-4bfa-808c-f52f8c169967"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Candara" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateInstance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="83" width="140" height="16" forecolor="#009EE0" uuid="09f6dbba-41a4-49c3-84b4-8e849b58ca6f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Agence de numérisation :]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="145" y="83" width="241" height="16" forecolor="#000000" backcolor="#009EE0" uuid="b1f92c86-eeb4-4289-b9ac-f6711f4f2384"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cdepointCapture}.substring(2,5)+" - "+$P{pointCapture}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="539" y="0" width="277" height="15" uuid="1fa9a7c7-3097-4d3c-9ae8-bc356da6f408"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bmlcn_CODE_ERREURS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="453" y="0" width="86" height="15" uuid="a42f3020-fa80-431c-bb1b-7bc24aefd22a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bmlcn_MNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="273" y="0" width="140" height="15" uuid="6013d73d-8d20-4232-84ee-bd33c1907d16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cpt_tire}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="230" y="0" width="43" height="15" uuid="4eabeeab-e76d-48e9-b6c5-2334fd18b811"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bmlcn_NSER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="159" y="0" width="71" height="15" uuid="487fcde7-4bd6-4d58-9433-bec390d23839"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BMTR_MNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="116" y="0" width="43" height="15" uuid="3bf32ed3-0854-481e-8c8c-9616396adbe6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BMTR_NSER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="50" y="0" width="66" height="15" uuid="574ae5e4-bed4-4744-ba9a-ce990a9a2241"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BMTR_CPT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="4" y="0" width="46" height="15" uuid="8ca21c01-c1ab-48d7-ab70-553b546c0805"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BMTR_age}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" x="413" y="0" width="40" height="15" uuid="101e9439-b04c-47c7-8bdc-f0b2ac083724"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bmlcn_SQCA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="92">
+			<staticText>
+				<reportElement x="13" y="26" width="357" height="60" uuid="d2877de3-0ee5-4775-887d-7e7b82184512"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7"/>
+				</textElement>
+				<text><![CDATA[LCPR=LCN prescrite
+ASGN=Absence de signature du tiré
+DIFF=Discordance entre le montant en chiffres et en lettres sur l'image
+RATU=Ratures et surcharges non approuvées par le tiré
+ENDO=Endos irrégulier
+ASTI=LCN non signée par le tireur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="6" width="100" height="20" uuid="ac274a98-5bcc-4cf4-87fa-302f6202fa13"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Mnémoniques :]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25">
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="3" width="72" height="10" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="fc9c95cf-3997-4172-860c-5bb7abd22a7f"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Date Traitement :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="82" y="12" width="116" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="052274bf-edf7-4f38-964b-10b3552bdffa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="117" y="3" width="293" height="10" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="d8384748-6b32-4f49-ae86-5e46cd0a9f75"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["| Point capture : "+$P{cdepointCapture}+"-"+$P{pointCapture}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="78" y="3" width="53" height="10" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="d8384748-6b32-4f49-ae86-5e46cd0a9f75"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateInstance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="5" y="11" width="71" height="12" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="96bed740-7c80-49ab-bf8e-1b64ccdd9756"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Crée Le        :]]></text>
+			</staticText>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="776" y="4" width="40" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="74507f8e-6bb3-47a1-8b73-2a81ad0e3695"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+"/" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

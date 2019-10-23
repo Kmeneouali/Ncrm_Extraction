@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+
+<h:head>
+<title>NCR'MExtraction</title>
+
+       
+
+<link rel="icon" type="image/png" href="./resources/images/icon.png" />
+	<h:outputStylesheet library="css" name="containers.css" />
+	<h:outputStylesheet library="css" name="theme.css" />
+	<h:outputStylesheet library="css" name="default.css" />
+ <h:outputStylesheet library="css" name="lists.css" /> 
+<h:outputStylesheet library="css" name="menu.css" /> 
+<h:outputStylesheet library="css" name="pages.css" /> 
+<h:outputStylesheet library="css" name="reset.css" />
+	<h:outputStylesheet library="css" name="dialog.css" /> 
+<link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-omega" />
+</h:head>
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	
+	  <ui:insert name="header" >
+		  <ui:include src="/Layout/commonHeader.xhtml" />
+		</ui:insert>
+
+	<div id="frame" style="">
+		<div id="content" class="content">
+ <div id="results" class="column decorated primary" style="left: 247px;">
+  <ui:insert name="content">
+		  <ui:include src="/Layout/commonContent.xhtml" />
+		</ui:insert>
+</div>
+			
+
+  <ui:insert name="menu" >
+		  <ui:include src="/Layout/commonMenu.xhtml" />
+		</ui:insert>
+			
+
+		</div>
+		<!-- /#display -->
+	</div>
+<div id="frameFooter" style="">
+        
+    </div>
+
+</h:body>
+</html>
+
+

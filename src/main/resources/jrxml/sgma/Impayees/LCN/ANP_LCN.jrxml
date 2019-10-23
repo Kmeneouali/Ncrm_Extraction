@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ANP_LCN" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b16a4f91-9441-4a66-9942-e0c3b88643d8">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="272"/>
+	<property name="ireport.jasperserver.url" value="http://localhost:8081/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="jasperadmin|"/>
+	<property name="ireport.jasperserver.report.resource" value="/Resources/JRXML_QMB/Impayes/LCN/ANP_LCN.jrxml"/>
+	<parameter name="p_nser" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cdepointCapture" class="java.lang.String"/>
+	<parameter name="dateInstance" class="java.util.Date"/>
+	<parameter name="p_ZBK_lib" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_MNT" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_DteEmi" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_NomTire" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_RC" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_AdrTire" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_dteTr" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_dteRej" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_RejLib" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="p_CIN" class="java.lang.String"/>
+	<parameter name="p_CPT" class="java.lang.String"/>
+	<parameter name="p_DTEEC" class="java.lang.String"/>
+	<parameter name="p_ZBKT" class="java.lang.String"/>
+	<parameter name="p_LOCTT" class="java.lang.String"/>
+	<parameter name="p_CPTT" class="java.lang.String"/>
+	<parameter name="p_RIBT" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="AGE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AGE_RMT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AGE_RMT_LIB" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CPT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CPTT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DTEEC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MEM2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MNT" class="java.lang.Double"/>
+	<field name="NSER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ZBK" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ZBK_lib" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DTEMI" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOMTIRE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CIN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RC" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MOTIF1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MOTIF2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MOTIF3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="adresseTire" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="REJET_LIB" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DTREJET" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DTEPRE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lieuEmission" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DTEemission" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="nser">
+		<groupExpression><![CDATA[$F{NSER}]]></groupExpression>
+		<groupHeader>
+			<band height="470">
+				<staticText>
+					<reportElement x="26" y="11" width="526" height="18" uuid="8683caa3-0851-4556-be23-95681d4730c9"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Nous soussignés, SOCIETE GENERALE ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="25" y="29" width="527" height="18" uuid="cc76ea18-0ab1-49fe-96a8-568be060c5d1"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[délivrons,vertu des dispositions de la Convention Interbancaire sur l’échange dématérialisé de la lettre ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="64" y="290" width="488" height="18" uuid="4138090b-0312-461e-b110-86df3801c4c3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[- a été payé par l’établissement tiré ………………….…..............  à concurrence de la provision ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="64" y="308" width="488" height="18" uuid="a8ff85cc-ea43-413b-91d7-e2cb3e4ae768"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[existante soit :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="75" y="326" width="477" height="18" uuid="17873651-29ac-4948-9141-d10c55ca2e6c"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[……….…………………………………………………….......................]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="64" y="390" width="469" height="33" uuid="384b1baa-4494-40a7-989c-ea319730f51b"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[Le présent certificat est délivré en application des dispositions de l’article 309 de la loi
+n°15-95 formant Code de commerce pour servir et valoir ce que de droit.
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="246" y="439" width="134" height="18" uuid="8d543116-c55d-4868-baeb-61a96be75f46"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[à ……………………]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="75" y="344" width="477" height="18" uuid="cda77a22-fb09-4d58-a818-2f321b67663f"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[……….……]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="26" y="47" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="2cda13e9-7c5c-403a-9360-0a2c7eade208"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["de change normalisée,  pour le compte de l’établissement domiciliataire   "+$P{p_ZBK_lib}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="65" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="602a86a6-ed1b-4614-8a8a-7a2fdba610c3"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["la présente attestation de non paiement de la lettre de change normalisée  n°  "+$P{p_nser}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="83" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="911e3436-1211-40c4-819e-54535f6b8e25"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["libellée en dirham, d’un montant de  "+$P{p_MNT}+"  et de date d’échéance   "+$P{p_DTEEC}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="119" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="0158c5bf-037d-4125-85c9-8dc4de002139"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["par  "+$P{p_NomTire}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="137" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="07b7935b-02de-4609-96de-655ce3c42e89"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["titulaire CIN / RC n°   "+$P{p_CIN}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="155" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="42424881-aac2-4b00-83d1-3d42b7d7b2d7"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["inscrit au R.C sous le n°  "+$P{p_RC}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="64" y="229" width="488" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="c086de4c-902b-464f-b983-a374c4e8a83c"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["a été rejetée par l’établissement domiciliataire le  "+$P{p_dteRej}+ " pour le(s) motif(s) suivant (s) :"]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="87" y="249" width="407" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="7282138d-33b3-4ecd-8c56-f86296298939"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{p_RejLib}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+					<reportElement mode="Transparent" x="403" y="439" width="126" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="70386d97-7ceb-4129-bc5d-7b80247369c8"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="380" y="439" width="24" height="18" uuid="4544387e-71dc-42f7-afd2-2d043abcaeb9"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12"/>
+					</textElement>
+					<text><![CDATA[le :]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="211" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="cca64171-0081-4f52-ad53-3d88ee981642"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["de l’établissement domiciliataire présentée au paiement le  "+$P{p_DteEmi}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="101" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="312618d6-fcc6-4426-8281-d325c02ea21c"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["émis à Casablanca le "+ $P{p_DteEmi}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="191" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="e11af377-999b-4387-bc69-b95b1b8f8e90"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["son compte n° "+$P{p_ZBKT}+$P{p_LOCTT}+$P{p_CPTT}+$P{p_RIBT}+"  ouvert dans les livres, "]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement mode="Transparent" x="26" y="173" width="526" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="c2ee7b6f-a143-478d-8058-54ac4d60920a"/>
+					<textElement verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA["domicilié  "+$P{p_AdrTire}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="88">
+			<staticText>
+				<reportElement x="139" y="52" width="309" height="20" uuid="385121dd-f0c5-48c2-a475-93fd63b87f68"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ATTESTATION DE NON PAIEMENT DE LETTRE DE CHANGE NORMALISEE]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="2" width="126" height="30" uuid="3d16b30c-2f28-45ab-acf3-4ab770dc28be"/>
+				<imageExpression><![CDATA[".\\jrxml\\logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+</jasperReport>

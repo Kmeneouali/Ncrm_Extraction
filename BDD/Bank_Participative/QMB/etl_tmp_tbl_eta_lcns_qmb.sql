@@ -1,0 +1,110 @@
+CREATE DATABASE  IF NOT EXISTS `etl` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `etl`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
+--
+-- Host: localhost    Database: etl
+-- ------------------------------------------------------
+-- Server version	5.5.40
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `tmp_tbl_eta_lcns_qmb`
+--
+
+DROP TABLE IF EXISTS `tmp_tbl_eta_lcns_qmb`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tmp_tbl_eta_lcns_qmb` (
+  `bmlcn_pk_obj_idt` int(11) NOT NULL,
+  `DATE` date DEFAULT NULL,
+  `age_r_lib` char(50) DEFAULT NULL,
+  `bq_lib` varchar(45) DEFAULT NULL,
+  `bmtn_OPE_ETA` varchar(1) NOT NULL,
+  `bmtn_ANO` text,
+  `bmtn_ANO_lib` varchar(145) DEFAULT NULL,
+  `bmtn_CDEBPR` varchar(3) DEFAULT NULL,
+  `bmtn_COUNT_CHQ` varchar(5) DEFAULT NULL,
+  `bmtn_DIFF` varchar(15) DEFAULT NULL,
+  `bmtn_DIFF_NB` varchar(5) DEFAULT NULL,
+  `bmtn_LECTEUR` varchar(3) DEFAULT NULL,
+  `bmtn_MEM2` varchar(5) DEFAULT NULL,
+  `bmtn_SUM_CHQ` varchar(15) DEFAULT NULL,
+  `bmta_OPE_ETA` varchar(1) NOT NULL,
+  `bmta_CDEBPR` varchar(3) DEFAULT NULL,
+  `bmta_MEM2` varchar(5) DEFAULT NULL,
+  `bmta_SQCA` varchar(10) DEFAULT NULL,
+  `bmtr_NSER` varchar(7) DEFAULT NULL,
+  `bmtr_MEM2` varchar(5) DEFAULT NULL,
+  `bmtr_MNT` varchar(12) DEFAULT NULL,
+  `bmtr_CDECLT` varchar(12) DEFAULT NULL,
+  `bmtr_NBCH` double DEFAULT NULL,
+  `bmtr_MODE_ESC` varchar(1) DEFAULT NULL,
+  `bmtr_OPE_ETA` varchar(1) NOT NULL,
+  `bmtr_SQCA` double DEFAULT NULL,
+  `bmtr_AGE_RMT` varchar(4) DEFAULT NULL,
+  `bmtr_TIERS` varchar(7) DEFAULT NULL,
+  `bmtr_REFCLI` varchar(15) DEFAULT NULL,
+  `bmtr_ANO` text,
+  `bmtr_ANO_lib` varchar(145) DEFAULT NULL,
+  `bmlcn_fk_ope_mne` varchar(12) DEFAULT NULL,
+  `bmlcn_instance` int(11) NOT NULL,
+  `bmlcn_ope_eta` varchar(1) NOT NULL,
+  `bmlcn_ADR_RMT` varchar(35) DEFAULT NULL,
+  `bmlcn_ADR_TIR` varchar(50) DEFAULT NULL,
+  `bmlcn_AGE` varchar(4) DEFAULT NULL,
+  `bmlcn_CDEBPR` varchar(3) DEFAULT NULL,
+  `bmlcn_CDE_REJ` varchar(3) DEFAULT NULL,
+  `bmlcn_CPT` varchar(16) DEFAULT NULL,
+  `bmlcn_CPT2` varchar(16) DEFAULT NULL,
+  `bmlcn_DBLT` varchar(1) DEFAULT NULL,
+  `bmlcn_DTEEMI` varchar(8) DEFAULT NULL,
+  `bmlcn_FLAG_REJET` varchar(1) DEFAULT NULL,
+  `bmlcn_FLAG_AVAL` varchar(1) DEFAULT NULL,
+  `bmlcn_LOC` varchar(3) DEFAULT NULL,
+  `bmlcn_MEM2` varchar(5) DEFAULT NULL,
+  `bmlcn_MNT` double DEFAULT NULL,
+  `bmlcn_NSER` varchar(7) DEFAULT NULL,
+  `bmlcn_RIB` varchar(2) DEFAULT NULL,
+  `bmlcn_RSOC_TIR` varchar(35) DEFAULT NULL,
+  `bmlcn_SQCA` double DEFAULT NULL,
+  `bmlcn_ZBK` varchar(3) DEFAULT NULL,
+  `bmlcn_ZIB` varchar(6) DEFAULT NULL,
+  `bmlcn_ANO` text,
+  `bmlcn_ANO_lib` varchar(145) DEFAULT NULL,
+  `bmlcn_CONF` varchar(1) DEFAULT NULL,
+  `bmlcn_VICE` text,
+  `bmlcn_AGE_RMT` varchar(4) DEFAULT NULL,
+  PRIMARY KEY (`bmlcn_pk_obj_idt`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tmp_tbl_eta_lcns_qmb`
+--
+
+LOCK TABLES `tmp_tbl_eta_lcns_qmb` WRITE;
+/*!40000 ALTER TABLE `tmp_tbl_eta_lcns_qmb` DISABLE KEYS */;
+INSERT INTO `tmp_tbl_eta_lcns_qmb` VALUES (171,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111851100004787','','0','20170329','1','','041','07001',10250,'0000022','20','ME BENJELLOUN MDP',1,'101','101041','','','1','','0701'),(172,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111851100004787','','0','20170329','1','','041','07001',10350,'0000023','20','ME BENJELLOUN MDP',2,'101','101041','','','1','','0701'),(173,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111851100004787','','0','20170329','1','','041','07001',18450,'0000024','20','ME BENJELLOUN MDP',3,'101','101041','','','2','','0701'),(174,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111851100004787','','0','20170329','1','','041','07001',10550,'0000025','20','ME BENJELLOUN MDP',4,'101','101041','','','2','','0701'),(175,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111546100001028','','0','20170329','1','','041','07001',10850,'0000019','18','STE DE CONTRUCTION BATIMENTS',5,'101','101041','','','1','','0701'),(176,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111546100001028','','0','20170329','1','','041','07001',10950,'0000020','18','STE DE CONTRUCTION BATIMENTS',6,'101','101041','','','1','','0701'),(177,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111546100001028','','0','20170329','1','','041','07001',20050,'0000021','18','STE DE CONTRUCTION BATIMENTS',7,'101','101041','','','2','','0701'),(178,'2017-03-29','AGENCE MARRAKECH MOHAMED V','Umnia Bank','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0000074495420012','','0','20170329','0','','450','07001',4000,'0000005','42','MR LCN RECU SIMT',8,'231','231450','','','1','','0701'),(179,'2017-03-29','AGENCE MARRAKECH MOHAMED V','Umnia Bank','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0000040062730015','','0','20170329','0','','450','07001',3000,'0000007','04','MR LCN RECU SIMT',9,'231','231450','','','1','','0701'),(180,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111851100004787','','0','20170329','1','','041','07001',10150,'0000021','20','MR BENJELLOUN MDP',10,'101','101041','','','1','','0701'),(181,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111544100001012','','0','20170329','1','','041','07001',10750,'0000043','76','MR NAYAF ALI',11,'101','101041','','','1','','0701'),(182,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111544100001012','','0','20170329','1','','041','07001',10650,'0000042','76','MR NAYAF ALI',12,'101','101041','','','1','','0701'),(183,'2017-03-29','AGENCE MARRAKECH MOHAMED V','BP Centre Sud','I','','','230','','0.00','0','001','07001','','','230','07001','1','0701003','07001','140050.00','32907740012',13,'0','I',1,'0701','00000','','','','STK_LCN',167,'I','','CASABLANCA','450','230','','0111851100004787','','0','20170329','1','','041','07001',10050,'0000020','20','ME BENJELLOUN MDP',13,'101','101041','','','1','','0701'),(188,'2017-03-29','AGENCE MARRAKECH MOHAMED V','C.I.H','I','','','230','6','0.00','0','001','07001','6200.00','','230','07001','26','0701007','07001','6200.00','32907740012',6,'0','I',26,'0701','00000','REMETTANT CHEQU','','','STK_LCN',167,'I','','CASABLANCA','450','230','','3036717214000300','','0','20170329','1','','021','07001',600,'5351616','02','M OU MME HILALOU',26,'230','230021','','','1','','0701'),(189,'2017-03-29','AGENCE MARRAKECH MOHAMED V','C.I.H','I','','','230','6','0.00','0','001','07001','6200.00','','230','07001','26','0701007','07001','6200.00','32907740012',6,'0','I',26,'0701','00000','REMETTANT CHEQU','','','STK_LCN',167,'I','','CASABLANCA','450','230','','3216178211000300','','0','20170329','1','','021','07001',700,'5351606','93','M OU MME HILALOU',27,'230','230021','','','1','','0701'),(190,'2017-03-29','AGENCE MARRAKECH MOHAMED V','C.I.H','I','','','230','6','0.00','0','001','07001','6200.00','','230','07001','26','0701007','07001','6200.00','32907740012',6,'0','I',26,'0701','00000','REMETTANT CHEQU','','','STK_LCN',167,'I','','CASABLANCA','450','230','','3218455211018500','','0','20170329','1','','021','07001',900,'5351603','68','M OU MME HILALOU',28,'230','230021','','','1','','0701'),(191,'2017-03-29','AGENCE MARRAKECH MOHAMED V','C.I.H','I','','','230','6','0.00','0','001','07001','6200.00','','230','07001','26','0701007','07001','6200.00','32907740012',6,'0','I',26,'0701','00000','REMETTANT CHEQU','','','STK_LCN',167,'I','','CASABLANCA','450','230','','4658030214000300','','0','20170329','1','','021','07001',1200,'5351615','18','M OU MME HILALOU',29,'230','230021','','','1','','0701'),(192,'2017-03-29','AGENCE MARRAKECH MOHAMED V','C.I.H','I','','','230','6','0.00','0','001','07001','6200.00','','230','07001','26','0701007','07001','6200.00','32907740012',6,'0','I',26,'0701','00000','REMETTANT CHEQU','','','STK_LCN',167,'I','','CASABLANCA','450','230','','4759465211000300','','0','20170329','1','','021','07001',1300,'5351605','08','M OU MME HILALOU',30,'230','230021','','','1','','0701'),(193,'2017-03-29','AGENCE MARRAKECH MOHAMED V','C.I.H','I','','','230','6','0.00','0','001','07001','6200.00','','230','07001','26','0701007','07001','6200.00','32907740012',6,'0','I',26,'0701','00000','REMETTANT CHEQU','','','STK_LCN',167,'I','','CASABLANCA','450','230','','9982778211000301','','0','20170329','1','','021','07001',1500,'5351604','11','M OU MME HILALOU',31,'230','230021','','','1','','0701');
+/*!40000 ALTER TABLE `tmp_tbl_eta_lcns_qmb` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-08-01 15:49:25

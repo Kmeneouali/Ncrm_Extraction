@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+xmlns:components="http://java.sun.com/jsf/composite/components">
+
+
+
+<h:head>
+
+	<h:title>NCRM-Extraction </h:title>
+
+</h:head>
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	<ui:composition template="/Layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<div class="content">
+				<div class="header ">
+					<div class="title">
+						<h2>
+							<h:outputText value="BAA-#{commun['bpmetatsChq']}" />
+							<h:outputText value=" " />
+							<!-- <h:outputText value="#{commun['titreGetSIChq']}" /> -->
+						</h2>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div id="resultsContainer" class="body">
+
+
+
+
+
+					<div
+						style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%">
+						
+						
+						
+						<components:componentPageEtats
+						  header="#{commun['listEtatschq']}"
+							nameLabledatetr="#{commun['dtetr']}"
+							datetr="#{ManagedBeanEtat.datetr}"
+							extraireetatsButtonText="#{commun['btnExtraire']}"
+							extraireetatsButtonAction="#{ManagedBeanEtat.extraireetats('BAA','031')}" />
+							
+						
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+
+

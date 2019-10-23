@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+	<title>NCR'MExtraction</title>
+
+
+
+	<link rel="icon" type="image/png" href="./resources/images/icon.png" />
+	
+	<h:outputStylesheet library="css" name="pageSpecific.css" /> 
+	
+</h:head>
+<body>
+<div class="container">
+  <div class="info">
+<!-- <img src="./resources/images/logo1.png"/> -->
+  </div>
+</div>
+<div class="form">
+  <div class="thumbnail"><img src="./resources/images/logo-login.png"/></div>
+
+  
+<!--  <h:form id="loginForm" prependId="false">
+				Messages must be global here, to show bad credentials
+				<h:messages globalOnly="true"/>
+				
+				Id's must not be changed to support spring security check
+				<h:panelGrid columns="3">
+					<h:outputLabel for="j_username" value="User: * " />  
+					<h:inputText id="j_username"  
+			            required="true" label="username"
+			            />  
+			    	<h:message for="j_username" display="text" style="color:red"/>
+			    	
+			    	<h:outputLabel for="j_password" value="Password: * " />  
+					<h:inputSecret id="j_password" label="password"
+			            required="true"
+			            />  
+			    	<h:message for="j_password" display="text" style="color:red"/>
+			    	
+			    	<h:outputLabel for="_spring_security_remember_me" value="Remember me: " />
+					<h:selectBooleanCheckbox
+						id="_spring_security_remember_me" />        
+				</h:panelGrid>
+			
+			<h:commandButton type="submit" id="login" value="Login" action="#{loginController.doLogin}" />
+</h:form> -->
+   
+    
+    <form method="post" action="j_spring_security_check" class="login-form">
+     
+    <c:if test="${param.status=='error'}">
+        <label style="color:red">Invalid username or password!!</label><br />
+    </c:if>
+    <!-- <c:if test="${param.status=='logout'}">
+        <label style="color:red">Logged out successfully!</label><br />
+        
+    </c:if> -->
+    <br />
+      <input name="j_username" type="text" placeholder="Id de l’utilisateur"  /> <br />
+      <input name="j_password" type="password" placeholder="mot de passe"/> <br />
+        <input value="connexion" type="submit" />
+    </form>
+    
+    
+</div>
+
+   
+    
+	
+</body>
+</html>
+

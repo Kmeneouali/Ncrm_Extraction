@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+		
+		
+		<!-- stored job-meta in memory --> 
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+ 	
+	<bean id="transactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+	 
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+		
+		
+		
+	<!-- ############################################################################## -->
+						<!-- le gestionnaire de transactions -->
+   <!-- ############################################################################## -->
+	
+	<tx:annotation-driven transaction-manager="jpaTransactionManager" />
+	<bean id="jpaTransactionManagerSgma_chq" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="localContainerEntityManagerFactoryBeanSgma_chq" />
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="jpaTransactionManager" />
+	<bean id="jpaTransactionManagerSgma_lcn" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="localContainerEntityManagerFactoryBeanSgma_lcn" />
+	</bean>
+	
+	<!-- ############################################################################## -->
+						 <!-- couche de persistance JPA -->
+   <!-- ############################################################################## -->
+	
+	<bean id="localContainerEntityManagerFactoryBeanSgma_chq"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="classpath:config/persistence.xml" />
+        <property name="persistenceUnitName" value="Sgma_chq" />  
+		<property name="dataSource" ref="basicDataSourceSgma_chq" />
+		<property name="jpaVendorAdapter">
+			<bean id="hibernateJpaVendorAdapterSgma_chq"
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+				<property name="generateDdl" value="false" />
+				<property name="showSql" value="false"></property>
+			</bean>
+		</property>
+		<property name="loadTimeWeaver">
+			<bean id="instrumentationLoadTimeWeaverSgma_chq"
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+	</bean>
+	
+	
+	<bean id="localContainerEntityManagerFactoryBeanSgma_lcn"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="classpath:config/persistence.xml" />
+        <property name="persistenceUnitName" value="Sgma_lcn" />  
+		<property name="dataSource" ref="basicDataSourceSgma_lcn" />
+		<property name="jpaVendorAdapter">
+			<bean id="hibernateJpaVendorAdapterSgma_lcn"
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+				<property name="generateDdl" value="false" />
+				<property name="showSql" value="false"></property>
+			</bean>
+		</property>
+		<property name="loadTimeWeaver">
+			<bean id="instrumentationLoadTimeWeaverSgma_lcn"
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+	</bean>
+	
+	<!-- ############################################################################## -->
+					<!-- DataSource -->
+   <!-- ############################################################################## -->
+	
+	<!--  <bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://172.17.0.7:3306/" />
+		<property name="username" value="root" />
+		<property name="password" value="fast" />
+	</bean>  -->
+	
+	<bean id="basicDataSourceSgma_chq" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://172.17.0.6:3306/" />
+		<property name="username" value="root" />
+		<property name="password" value="fast" />
+		<property name="maxIdle" value="5"/>
+        <property name="maxActive" value="20"/>
+        <property name="minIdle" value="5"/>
+        <property name="validationQuery" value="SELECT 1"/>
+	</bean>
+	
+	<bean id="basicDataSourceSgma_lcn" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://172.17.0.4:3306/" />
+		<property name="username" value="root" />
+		<property name="password" value="fast" />
+		<property name="maxIdle" value="5"/>
+        <property name="maxActive" value="20"/>
+        <property name="minIdle" value="5"/>
+        <property name="validationQuery" value="SELECT 1"/>
+	</bean>
+	
+	
+
+
+</beans>

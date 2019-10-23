@@ -1,0 +1,235 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<import resource="../../../ApplicationContexBPM.xml" />
+	<!-- JobRepository and JobLauncher are configuration/setup classes -->
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean" />
+
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+
+
+	<!-- ItemReader which reads from database and returns the row mapped by 
+		rowMapper -->
+	<bean id="databaseItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+		<property name="dataSource" ref="basicDataSourceBpm_chq" />
+		<property name="sql" value="#{jobParameters[req]}" />
+	
+		<property name="rowMapper">
+			<bean class="com.ncrm.SprBatch.etatschqRowMapper" />
+		</property>
+
+	</bean>
+
+
+	<!-- ItemWriter writes a line into output flat file -->
+	<bean id="flatFileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+
+		<property name="resource" value="file:#{jobParameters[resource]}" />
+
+		<property name="lineAggregator">
+
+			<!-- An Aggregator which converts an object into delimited list of strings -->
+			<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+
+				<property name="delimiter" value="!" />
+
+				<property name="fieldExtractor">
+
+					<!-- Extractor which returns the value of beans property through reflection -->
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names" value="bmch_pk_obj_idt, DATE, age_r_lib, bq_lib, bmtn_OPE_ETA, bmtn_ANO,bmtn_ANO_lib, bmtn_CDEBPR, bmtn_COUNT_CHQ, bmtn_DIFF, bmtn_DIFF_NB, bmtn_LECTEUR, bmtn_MEM2, bmtn_SUM_CHQ, bmta_OPE_ETA, bmta_Ano,bmta_Ano_lib, bmta_CDEBPR, bmta_MEM2, bmta_SQCA, bmtr_NSER, bmtr_MEM2, bmtr_MNT, bmtr_CDECLT, bmtr_NBCH, bmtr_MODE_ESC, bmtr_OPE_ETA, bmtr_SQCA, bmtr_AGE_RMT, bmtr_TIERS, bmtr_REFCLI, bmtr_ANO,bmtr_ANO_lib, bmch_fk_ope_mne, bmch_instance, bmch_ope_eta, bmch_ADR_RMT, bmch_ADR_TIR, bmch_AGE, bmch_CDEBPR, bmch_CDE_REJ, bmch_CPT, bmch_CPT2, bmch_DBLT, bmch_DTEEMI, bmch_FLAG_IMP, bmch_FLAG_REJET, bmch_FLAG_AVAL, bmch_LOC, bmch_MEM2, bmch_MNT, bmch_NSER, bmch_RIB, bmch_RIO, bmch_RSOC_TIR, bmch_SQCA, bmch_ZBK, bmch_ZIB, bmch_ANO,bmch_ANO_lib, bmch_VICE,bmch_CONF, bmch_DTEINV, bmch_AGE_RMT" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+
+<bean id="databaseItemReaderPcapt" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+		<property name="dataSource" ref="basicDataSourceBpm_chq" />
+		<property name="sql"
+			value="#{jobParameters[req2]}" />
+	
+		<property name="rowMapper">
+			<bean class="com.ncrm.SprBatch.tblScannRowMapper" />
+		</property>
+
+	</bean>
+
+
+	<!-- ItemWriter writes a line into output flat file -->
+	<bean id="flatFileItemWriterPcapt" class="org.springframework.batch.item.file.FlatFileItemWriter"
+		scope="step">
+
+		<property name="resource" value="file:#{jobParameters[resource2]}" />
+
+		<property name="lineAggregator">
+
+			<!-- An Aggregator which converts an object into delimited list of strings -->
+			<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+
+				<property name="delimiter" value="!" />
+
+				<property name="fieldExtractor">
+
+					<!-- Extractor which returns the value of beans property through reflection -->
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names"
+							value="cdeScanner,age,type,lib" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+	<!-- Optional JobExecutionListener to perform business logic before and 
+		after the job -->
+	<!-- <bean id="jobListener" class="com.ncrm.Bpm.SprBatch.ImpChqBpmJobListener" 
+		/> -->
+
+	<!-- Optional ItemProcessor to perform business logic/filtering on the input 
+		records -->
+	<!-- <bean id="itemProcessor" class="com.websystique.springbatch.ExamResultItemProcessor" 
+		/> -->
+    <bean id="itemProcessor" class="com.ncrm.SprBatch.DataFilterProcessorEtaChqBpm" /> 
+	<bean id="itemProcessorLCN" class="com.ncrm.SprBatch.DataFilterProcessorEtaLCNBpm" /> 
+	
+	<!-- Step will need a transaction manager -->
+	<bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+	<!-- Actual Job -->
+	<batch:job id="jobExporterETAChqBPM">
+		<batch:step id="step1" next="step2">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReader" writer="flatFileItemWriter" commit-interval="10" processor="itemProcessor"  />
+				<!-- processor="itemProcessor" -->
+			</batch:tasklet>
+		</batch:step>
+		
+		<batch:step id="step2">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReaderPcapt" writer="flatFileItemWriterPcapt" commit-interval="10" />
+				<!-- processor="itemProcessor" -->
+			</batch:tasklet>
+			
+		</batch:step>
+		<!-- <batch:listeners> <batch:listener ref="jobListener" /> </batch:listeners> -->
+	</batch:job>
+
+
+<bean id="databaseItemReaderLCN" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+		<property name="dataSource" ref="basicDataSourceBpm_lcn" />
+		<property name="sql"
+			value="#{jobParameters[req]}" />
+		<property name="rowMapper">
+			<bean class="com.ncrm.SprBatch.etatslcnRowMapper" />
+		</property>
+
+	</bean>
+
+
+	<!-- ItemWriter writes a line into output flat file -->
+	<bean id="flatFileItemWriterLCN" class="org.springframework.batch.item.file.FlatFileItemWriter"
+		scope="step">
+
+		<property name="resource" value="file:#{jobParameters[resource]}" />
+
+		<property name="lineAggregator">
+
+			<!-- An Aggregator which converts an object into delimited list of strings -->
+			<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+
+				<property name="delimiter" value="!" />
+
+				<property name="fieldExtractor">
+
+					<!-- Extractor which returns the value of beans property through reflection -->
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names"
+							value="bmlcn_pk_obj_idt, DATE, age_r_lib, bq_lib, bmtn_OPE_ETA, bmtn_ANO,bmtn_ANO_lib, bmtn_CDEBPR, bmtn_COUNT_CHQ, bmtn_DIFF, bmtn_DIFF_NB, bmtn_LECTEUR, bmtn_MEM2, bmtn_SUM_CHQ, bmta_OPE_ETA, bmta_CDEBPR, bmta_MEM2, bmta_SQCA, bmtr_NSER, bmtr_MEM2, bmtr_MNT, bmtr_CDECLT, bmtr_NBCH, bmtr_MODE_ESC, bmtr_OPE_ETA, bmtr_SQCA, bmtr_AGE_RMT, bmtr_TIERS, bmtr_REFCLI, bmtr_ANO,bmtr_ANO_lib, bmlcn_fk_ope_mne, bmlcn_instance, bmlcn_ope_eta, bmlcn_ADR_RMT, bmlcn_ADR_TIR, bmlcn_AGE, bmlcn_CDEBPR, bmlcn_CDE_REJ, bmlcn_CPT, bmlcn_CPT2, bmlcn_DBLT, bmlcn_DTEEMI, bmlcn_FLAG_REJET, bmlcn_FLAG_AVAL, bmlcn_LOC, bmlcn_MEM2, bmlcn_MNT, bmlcn_NSER, bmlcn_RIB, bmlcn_RSOC_TIR, bmlcn_SQCA, bmlcn_ZBK, bmlcn_ZIB, bmlcn_ANO,bmlcn_ANO_lib,bmlcn_CONF, bmlcn_VICE, bmlcn_AGE_RMT" />
+					</bean><!-- bmta_ANO,bmta_ANO_lib, -->
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+
+
+<bean id="databaseItemReaderLcnStk" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+		<property name="dataSource" ref="basicDataSourceBpm_lcn" />
+		<property name="sql"
+			value="#{jobParameters[reqStock]}" />
+	
+		<property name="rowMapper">
+			<bean class="com.ncrm.SprBatch.LcnStkRowMapper" />
+		</property>
+
+	</bean>
+
+
+	<!-- ItemWriter writes a line into output flat file -->
+	<bean id="flatFileItemWriterLcnStk" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+
+		<property name="resource" value="file:#{jobParameters[resourceStock]}" />
+
+		<property name="lineAggregator">
+
+			<!-- An Aggregator which converts an object into delimited list of strings -->
+			<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+
+				<property name="delimiter" value="!" />
+
+				<property name="fieldExtractor">
+
+					<!-- Extractor which returns the value of beans property through reflection -->
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names"
+							value="PK_OBJ_IDT,ADR_BEN,ADR_RMT,ADR_TIRE,CDEAVAL,CDEBPR,CDEPRE,CPT,CPTT,DTEEC,DTEINS,DTEMI,LOC,LOCT,MNT,NSER,RIB,RIBT,RSOC_BEN,RSOC_RMT,RSOC_TIRE,ZBK,ZBKT,ZIB,ZIBT,DTEPRE,DTEEXT,DTREG,FLAG_IMP,RIO,MODE_ESC,AGE_RMT,SQCA,AGE_RMT_LIB,CDEBPR_RMT,FLAGEXT,MEm2" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+
+<!-- Actual Job -->
+	<batch:job id="jobExporterETALCNBPM">
+		<batch:step id="steplcn" next="steplcnStk">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReaderLCN" writer="flatFileItemWriterLCN" processor="itemProcessorLCN"
+					commit-interval="10" />
+				<!--  -->
+			</batch:tasklet>
+		</batch:step>
+		
+		<batch:step id="steplcnStk">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReaderLcnStk" writer="flatFileItemWriterLcnStk" commit-interval="10" />
+				<!-- processor="itemProcessor" -->
+			</batch:tasklet>
+			
+		</batch:step>
+		
+		
+		
+		<!-- <batch:listeners> <batch:listener ref="jobListener" /> </batch:listeners> -->
+	</batch:job>
+</beans>
+
+
+

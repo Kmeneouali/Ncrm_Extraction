@@ -1,0 +1,384 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<import resource="../../../ApplicationContexSgma.xml" />
+	<import resource="../../../ApplicationContexlocal.xml" />
+
+	<!-- JobRepository and JobLauncher are configuration/setup classes -->
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean" />
+
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+
+
+	<!-- ItemReader which reads from database and returns the row mapped by rowMapper -->
+	<bean id="databaseItemReader"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader"
+		scope="step">
+		<property name="dataSource" ref="basicDataSourceSgma_chq" />
+		<property name="sql" value="#{jobParameters[req]}" />
+		<property name="rowMapper">
+			<bean class="com.ncrm.SprBatch.sgma.etatschqRowMapper" />
+		</property>
+	</bean>
+
+
+
+
+	<bean id="mysqlItemWriter"
+		class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+		<property name="dataSource" ref="basicDataSourcelocal" />
+		<property name="sql">
+			<value>
+            <![CDATA[        
+					INSERT INTO r_ncrm_extraction.tmp_tbl_Suivi_chq_sgma
+					(pk_obj_idt_Chq,
+					BMCH_CPT,
+					DTEMI,
+					BMCH_LOC,
+					BMCH_ZBK,
+					BMCH_ZIB,
+					Bmch_ZBK_lib,
+					BMCH_NSER,
+					BMCH_RIB,
+					BMCH_CONF,
+					BMCH_CODE_ERREURS,
+					BMCH_ope_eta,
+					BMCH_ANO,
+					BMCH_ANO_LIB,
+					BMCH_MNT,
+					BMCH_FLAG_IMP,
+					BMCH_FLAG_REJET,
+					BMCH_FLAG_SCAN_GR,
+					bmch_SQCA,
+					bmch_ID_WEBCAPTUR,
+					bmch_AGE_SCAN,
+					BMCH_REJET_DELTA,
+					bmch_sign,
+					BMCH_RIO,
+					BMTR_age,
+					ageTr_lib,
+					BMTR_ope_eta,
+					pk_obj_idt_rem,
+					BMTR_Ano,
+					BMTR_ANO_LIB,
+					BMTR_Flag_Rejet,
+					BMTR_mode,
+					BMTR_MNT,
+					BMTR_CPT,
+					BMTR_RIB,
+					BMTR_loc,
+					BMTR_zbk,
+					BMTR_NSER,
+					BMTR_NBCH,
+					bmtr_ID_WEBCAPTUR,
+					bmtr_AGE_SCAN,
+					bmtr_SECTEUR,
+					BMTa_ope_eta,
+					BMTa_Ano,
+					BMTa_Ano_lib,
+					BMTa_Flag_Rejet,
+					BMTa_mode,
+					BMTa_MNTR,
+					BMTA_MNTREM,
+					BMTA_MNT_DIFF,
+					BMTA_DIFF_NB,
+					BMTA_NSER_TA,
+					BMTA_CPT,
+					BMTA_NSER,
+					BMTA_COUNT_REM,
+					BMTA_age,
+					BMTN_Ano,
+					BMTN_ope_eta,
+					BMTN_DIFF,
+					BMTN_DIFF_NB,
+					BMTN_sum_chq,
+					BMTN_lecteur,
+					DATE)
+					VALUES
+					(:pk_obj_idt_Chq,
+					:BMCH_CPT,
+					:DTEMI,
+					:BMCH_LOC,
+					:BMCH_ZBK,
+					:BMCH_ZIB,
+					:Bmch_ZBK_lib,
+					:BMCH_NSER,
+					:BMCH_RIB,
+					:BMCH_CONF,
+					:BMCH_CODE_ERREURS,
+					:BMCH_ope_eta,
+					:BMCH_ANO,
+					:BMCH_ANO_LIB,
+					:BMCH_MNT,
+					:BMCH_FLAG_IMP,
+					:BMCH_FLAG_REJET,
+					:BMCH_FLAG_SCAN_GR,
+					:bmch_SQCA,
+					:bmch_ID_WEBCAPTUR,
+					:bmch_AGE_SCAN,
+					:BMCH_REJET_DELTA,
+					:bmch_sign,
+					:BMCH_RIO,
+					:BMTR_age,
+					:ageTr_lib,
+					:BMTR_ope_eta,
+					:pk_obj_idt_rem,
+					:BMTR_Ano,
+					:BMTR_ANO_LIB,
+					:BMTR_Flag_Rejet,
+					:BMTR_mode,
+					:BMTR_MNT,
+					:BMTR_CPT,
+					:BMTR_RIB,
+					:BMTR_loc,
+					:BMTR_zbk,
+					:BMTR_NSER,
+					:BMTR_NBCH,
+					:bmtr_ID_WEBCAPTUR,
+					:bmtr_AGE_SCAN,
+					:bmtr_SECTEUR,
+					:BMTa_ope_eta,
+					:BMTa_Ano,
+					:BMTa_Ano_lib,
+					:BMTa_Flag_Rejet,
+					:BMTa_mode,
+					:BMTa_MNTR,
+					:BMTA_MNTREM,
+					:BMTA_MNT_DIFF,
+					:BMTA_DIFF_NB,
+					:BMTA_NSER_TA,
+					:BMTA_CPT,
+					:BMTA_NSER,
+					:BMTA_COUNT_REM,
+					:BMTA_age,
+					:BMTN_Ano,
+					:BMTN_ope_eta,
+					:BMTN_DIFF,
+					:BMTN_DIFF_NB,
+					:BMTN_sum_chq,
+					:BMTN_lecteur,
+					:DATE);
+			]]>
+
+			</value>
+		</property>
+		<!-- It will take care matching between object property and sql name parameter -->
+		<property name="itemSqlParameterSourceProvider">
+			<bean
+				class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+		</property>
+	</bean>
+
+	<!-- Optional ItemProcessor to perform business logic/filtering on the input  records -->
+
+	<bean id="itemProcessor" class="com.ncrm.SprBatch.sgma.DataFilterProcessorEtaChq" />
+	<bean id="itemProcessorLCN" class="com.ncrm.SprBatch.sgma.DataFilterProcessorEtaLCN" />
+
+	<!-- Step will need a transaction manager -->
+	<bean id="transactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+	<!-- Actual Job -->
+	<batch:job id="jobExporterSUIVIChqSGMA">
+		<batch:step id="step1"><!-- next="step2" -->
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReader" writer="mysqlItemWriter"
+					commit-interval="10" processor="itemProcessor" />
+				<!-- processor="itemProcessor" -->
+
+				<!-- <batch:listeners> <batch:listener ref="EtaChqItemWriterListener" 
+					/> </batch:listeners> -->
+			</batch:tasklet>
+		</batch:step>
+
+		<!-- <batch:step id="step2"> <batch:tasklet transaction-manager="transactionManager"> 
+			<batch:chunk reader="databaseItemReaderPcapt" writer="mysqlItemWriterPcapt" 
+			commit-interval="10" /> processor="itemProcessor" </batch:tasklet> </batch:step> -->
+		<!-- <batch:listeners> <batch:listener ref="jobListener" /> </batch:listeners> -->
+	</batch:job>
+
+	<bean id="EtaChqItemWriterListener" class="com.ncrm.SprBatch.sgma.EtaChqItemWriterListener" />
+	<bean id="databaseItemReaderLCN"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader"
+		scope="step">
+		<property name="dataSource" ref="basicDataSourceSgma_lcn" />
+		<property name="sql" value="#{jobParameters[req]}" />
+		<property name="rowMapper">
+			<bean class="com.ncrm.SprBatch.sgma.etatsLcnRowMapper" />
+		</property>
+
+	</bean>
+
+
+	<bean id="mysqlItemWriterLcn"
+		class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+		<property name="dataSource" ref="basicDataSourcelocal" />
+		<property name="sql">
+			<value>
+            <![CDATA[        
+INSERT INTO r_ncrm_extraction.tmp_tbl_Suivi_lcn_sgma
+
+(pk_obj_idt_rem,
+pk_obj_idt_LCN,
+Bmlcn_CPT,
+DTEMI,
+BMLCN_LOC,
+BMLCN_ZBK,
+bmlcn_ZBK_lib,
+bmlcn_NSER,
+bmlcn_RIB,
+bmlcn_CONF,
+bmlcn_CODE_ERREURS,
+bmlcn_ope_eta,
+bmlcn_ANO,
+bmlcn_ANO_LIB,
+bmlcn_MNT,
+bmlcn_FLAG_IMP,
+bmlcn_FLAG_REJET,
+bmlcn_FLAG_SCAN_GR,
+bmlcn_SQCA,
+bmlcn_ID_WEBCAPTUR,
+bmlcn_AGE_SCAN,
+bmlcn_sign,
+bmlcn_rio,
+BMTR_age,
+ageTr_lib,
+BMTR_ope_eta,
+BMTR_Ano,
+BMTR_Ano_LIB,
+BMTR_Flag_Rejet,
+BMTR_mode,
+BMTR_MNT,
+BMTR_CPT,
+BMTR_RIB,
+BMTR_zbk,
+BMTR_NSER,
+BMTR_NBCH,
+bmtr_ID_WEBCAPTUR,
+bmtr_AGE_SCAN,
+bmtr_SECTEUR,
+BMTa_ope_eta,
+BMTa_Ano,
+BMTa_Ano_lib,
+BMTa_Flag_Rejet,
+BMTa_mode,
+BMTa_MNTR,
+BMTA_MNTREM,
+BMTA_MNT_DIFF,
+BMTA_DIFF_NB,
+BMTA_NSER_TA,
+BMTA_CPT,
+BMTA_NSER,
+BMTA_COUNT_REM,
+BMTA_age,
+BMTN_Ano,
+BMTN_Ano_LIB,
+BMTN_ope_eta,
+BMTN_DIFF,
+BMTN_DIFF_NB,
+BMTN_sum_Lcn,
+BMTN_lecteur,
+DATE,
+bmlcn_REJET_DELTA,
+bmlcn_dteec)
+VALUES
+
+(
+:pk_obj_idt_rem,
+:pk_obj_idt_LCN,
+:Bmlcn_CPT,
+:DTEMI,
+:Bmlcn_LOC,
+:Bmlcn_ZBK,
+:bmlcn_ZBK_lib,
+:bmlcn_NSER,
+:bmlcn_RIB,
+:bmlcn_CONF,
+:bmlcn_CODE_ERREURS,
+:bmlcn_ope_eta,
+:bmlcn_ANO,
+:bmlcn_ANO_LIB,
+:bmlcn_MNT,
+:bmlcn_FLAG_IMP,
+:bmlcn_FLAG_REJET,
+:bmlcn_FLAG_SCAN_GR,
+:bmlcn_SQCA,
+:bmlcn_ID_WEBCAPTUR,
+:bmlcn_AGE_SCAN,
+:bmlcn_sign,
+:bmlcn_rio,
+:BMTR_age,
+:ageTr_lib,
+:BMTR_ope_eta,
+:BMTR_Ano,
+:BMTR_Ano_LIB,
+:BMTR_Flag_Rejet,
+:BMTR_mode,
+:BMTR_MNT,
+:BMTR_CPT,
+:BMTR_RIB,
+:BMTR_zbk,
+:BMTR_NSER,
+:BMTR_NBCH,
+:bmtr_ID_WEBCAPTUR,
+:bmtr_AGE_SCAN,
+:bmtr_SECTEUR,
+:BMTa_ope_eta,
+:BMTa_Ano,
+:BMTa_Ano_lib,
+:BMTa_Flag_Rejet,
+:BMTa_mode,
+:BMTa_MNTR,
+:BMTA_MNTREM,
+:BMTA_MNT_DIFF,
+:BMTA_DIFF_NB,
+:BMTA_NSER_TA,
+:BMTA_CPT,
+:BMTA_NSER,
+:BMTA_COUNT_REM,
+:BMTA_age,
+:BMTN_Ano,
+:BMTN_Ano_LIB,
+:BMTN_ope_eta,
+:BMTN_DIFF,
+:BMTN_DIFF_NB,
+:BMTN_sum_Lcn,
+:BMTN_lecteur,
+:DATE,
+:bmlcn_REJET_DELTA,
+:bmlcn_dteec);
+
+
+]]>
+			</value>
+		</property>
+		<!-- It will take care matching between object property and sql name parameter -->
+		<property name="itemSqlParameterSourceProvider">
+			<bean
+				class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+		</property>
+	</bean>
+
+
+	<!-- Actual Job -->
+	<batch:job id="jobExporterSUIVILCNSGMA">
+		<batch:step id="steplcn">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReaderLCN" writer="mysqlItemWriterLcn"
+					processor="itemProcessorLCN" commit-interval="10" />
+				<!-- -->
+			</batch:tasklet>
+		</batch:step>
+		<!-- <batch:listeners> <batch:listener ref="jobListener" /> </batch:listeners> -->
+	</batch:job>
+</beans>
+
+
+

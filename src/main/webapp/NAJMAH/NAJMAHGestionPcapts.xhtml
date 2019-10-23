@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+
+	
+
+</h:head>
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	<ui:composition template="/Layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<div class="content">
+				<div class="header ">
+					<div class="title">
+						<h2>
+							<h:outputText value="Point de capture NAJMAH" />
+							<h:outputText value=" " />
+
+						</h2>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div id="resultsContainer" class="body">
+
+
+
+
+
+					<div
+						style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%">
+						<h:form id="form1">
+
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+								closable="false" resizable="false" showHeader="false">
+								<p:graphicImage name="images/progressbar.gif" />
+							</p:dialog>
+
+
+							<!-- Panel 1 -->
+
+							<p:panel id="horizontal" header="list point de capture NAJMAH"
+								toggleable="true" style="  margin-bottom:5px">
+
+								<p:messages id="messages" showDetail="true" autoUpdate="true"
+									closable="false"
+									style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%" />
+
+
+
+
+								<p:panelGrid
+									style="width: 50%;margin: 0 auto;margin-bottom:5px;margin-top:5px;">
+
+
+
+									<p:row>
+
+										<p:column style="">
+											<p:outputLabel value="#{commun['cdePntcpt']}" />
+										</p:column>
+
+										<p:column style="">
+											<h:inputText id="cdePcapt"
+												value="#{AddNewPcaptNajmaBean.cdePcapt}">
+												<f:validateRegex pattern="^[0-9]{5}$" />
+											</h:inputText>
+										</p:column>
+
+									</p:row>
+									<p:row>
+
+										<p:column style="">
+											<p:outputLabel value="#{commun['nomPntCpt']}" />
+										</p:column>
+
+										<p:column style="">
+											<h:inputText value="#{AddNewPcaptNajmaBean.nomPcapt}" />
+										</p:column>
+
+									</p:row>
+									<p:row>
+
+										<p:column style="">
+											<p:outputLabel value="Localite" />
+										</p:column>
+
+										<p:column style="">
+											<h:inputText value="#{AddNewPcaptNajmaBean.loc}" />
+										</p:column>
+
+									</p:row>
+									<!-- 
+									<p:row>
+
+										<p:column style="">
+											<p:outputLabel value="Circuit" />
+										</p:column>
+
+										<p:column style="">
+											<h:inputText value="#{AddNewPcaptNajmaBean.circuit}" />
+										</p:column>
+
+									</p:row> -->
+									
+
+									<p:row>
+
+										<p:column style="">
+											<p:outputLabel value="#{commun['typePntcpt']}" />
+										</p:column>
+
+										<p:column style="">
+											<p:selectOneRadio id="typePacapt" layout="grid" columns="1"
+												value="#{AddNewPcaptNajmaBean.type}">
+												<f:selectItem itemLabel="Agence" itemValue="AG" />
+												<f:selectItem itemLabel="Grand Remettant" itemValue="GR" />
+											</p:selectOneRadio>
+										</p:column>
+
+									</p:row>
+
+									<p:row>
+
+										<p:column style="">
+
+										</p:column>
+
+										 <p:column style=""> 
+											<p:commandButton
+												actionListener="#{AddNewPcaptNajmaBean.AddNewpcaptSgma()}"
+												update=":form1:tablepcapts" value="#{commun['btnsave']}" 
+												icon="ui-icon-disk" style="" />
+										</p:column> 
+
+
+									</p:row>
+
+								</p:panelGrid>
+
+
+								<p:dataTable id="tablepcapts" var="pcapt"
+									value="#{AddNewPcaptNajmaBean.listpcaptSelecteds}"
+									emptyMessage="" rows="20" paginator="true"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="10,20,30" paginatorPosition="bottom"
+									filteredValue="#{AddNewPcaptNajmaBean.listpcapts}"
+									widgetVar="pcaptTable" editable="true" style="margin-top:10px;">
+
+
+
+
+								 	<p:ajax event="rowEdit"
+										listener="#{AddNewPcaptNajmaBean.onRowEdit}" /> 
+									<p:column headerText="#{commun['cdePntcpt']}" 
+										filterBy="#{pcapt.cdePcapt}" filterMatchMode="startsWith">
+										<f:facet name="filter">
+											<p:selectOneMenu id="cdepc" filter="true"
+												onchange="PF('pcaptTable').filter()"
+												value="#{AddNewPcaptNajmaBean.cdePcaptSelected}"
+												style="width:200px">
+												<f:selectItem itemLabel="#{commun['All-Pcapts']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems value="#{AddNewPcaptNajmaBean.listpcapts}"
+													var="pc" itemLabel="#{pc.cdePcapt}-#{pc.nomPcapt}"
+													itemValue="#{pc.cdePcapt}" />
+											</p:selectOneMenu>
+
+
+
+
+
+										</f:facet>
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pcapt.cdePcapt}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pcapt.cdePcapt}"
+													validatorMessage="Value does not match pattern.">
+													<f:validateRegex pattern="^[0-9]{5}$" />
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+
+
+									</p:column>
+									<p:column headerText="#{commun['nomPntCpt']}">
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pcapt.nomPcapt}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pcapt.nomPcapt}">
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+
+
+
+									</p:column>
+									<p:column headerText="#{commun['typePntcpt']}">
+
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pcapt.type}" />
+											</f:facet>
+											<f:facet name="input">
+												<h:selectOneMenu value="#{pcapt.type}" style="width:100%">
+													<!-- <f:selectItem itemLabel="#{pcapt.type}"
+												itemValue="#{pcapt.type}" /> -->
+													<f:selectItem itemLabel="AG" itemValue="AG" />
+													<f:selectItem itemLabel="GR" itemValue="GR" />
+
+												</h:selectOneMenu>
+											</f:facet>
+										</p:cellEditor>
+
+									</p:column>
+
+									<p:column headerText="#{commun['ageRattachement']}"
+										filterBy="#{pcapt.ageRattachement}"
+										filterMatchMode="startsWith">
+
+										<p:cellEditor>
+											<f:facet name="output">
+												<h:outputText value="#{pcapt.ageRattachement}" />
+											</f:facet>
+											<f:facet name="input">
+												<p:inputText value="#{pcapt.ageRattachement}">
+													<f:validateRegex pattern="^[0-9]{5}$" />
+												</p:inputText>
+											</f:facet>
+										</p:cellEditor>
+
+									</p:column>
+
+
+
+									<p:column style="width:60px;text-align: center">
+										<p:rowEditor />
+									</p:column>
+									<p:column style="width:32px;text-align: center">
+										 <p:commandButton
+											actionListener="#{AddNewPcaptNajmaBean.deletePcapt(pcapt.idpcapt,pcapt.ageRattachement)}"
+											update="form1:tablepcapts" icon="ui-icon-trash"
+											style="width:16px; height:16px">
+
+											<p:confirm header="#{commun['confirmation']}"
+												message="#{commun['msgConfirmationDeletePcapt']}"
+												icon="ui-icon-alert" />
+										</p:commandButton> 
+									</p:column>
+								</p:dataTable>
+
+							</p:panel>
+
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Yes" type="button"
+									styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+								<p:commandButton value="No" type="button"
+									styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							</p:confirmDialog>
+
+
+
+
+
+						</h:form>
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+
+

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+
+	<h:title>NCRM-Extraction </h:title>
+
+</h:head>
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	<ui:composition template="/Layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<div class="content">
+				<div class="header ">
+					<div class="title">
+						<h2>
+							<h:outputText value="#{commun['cptBPM']} BAA" />
+							<h:outputText value=" " />
+
+						</h2>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div id="resultsContainer" class="body">
+
+
+
+
+
+					<div
+						style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%">
+						<h:form id="form1">
+
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+								closable="false" resizable="false" showHeader="false">
+								<p:graphicImage name="images/progressbar.gif" />
+							</p:dialog>
+
+
+							<!-- Panel 1 -->
+
+							<p:panel id="horizontal" header="#{commun['listcptsBpm']}"
+								toggleable="true" style="  margin-bottom:5px">
+
+								<p:messages id="messages" showDetail="true" autoUpdate="true"
+									closable="false"
+									style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%" />
+
+
+
+								<p:dataTable id="tableservices" var="serv" value="#{SysManagementBean.services}">
+									<p:column headerText="Id Service">
+										<h:outputText value="#{serv.idServices}" />
+									</p:column>
+
+									<p:column headerText="Nom Service">
+										<h:outputText value="#{serv.nomServices}" />
+									</p:column>
+
+									<p:column headerText="Description">
+										<h:outputText value="#{serv.description}" />
+									</p:column>
+
+
+									<p:column headerText="Action"
+										style="text-align: center">
+										
+										<p:commandButton update=":form1:tableservices"
+											actionListener="#{SysManagementBean.startService(serv.nomServices)}"
+											icon="ui-icon-play" />
+											
+											
+											<p:commandButton update=":form1:tableservices"
+											actionListener="#{SysManagementBean.stopService(serv.nomServices)}"
+											icon="ui-icon-power" />
+											
+									</p:column>
+									
+										
+											
+
+								</p:dataTable>
+
+							</p:panel>
+
+
+						</h:form>
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+
+

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ETA_LCN_Recup_BY_bq_echee_Lointain" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="20" bottomMargin="20" uuid="f2daf937-9dc6-4078-8c68-2417cda7768b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FAEBD7">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<paragraph lineSpacing="Single"/>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFE4BF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<pen lineStyle="Dashed"/>
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="listparams" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="username" class="java.lang.String"/>
+	<parameter name="dtePre" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[SELECT
+    date AS DATE,
+    banque AS banque,
+    lib_bq lib_bq,
+    SUM(NBR_LCN_valide) AS NBR_LCN_valide,
+    SUM(sum_mnt) sum_mnt,
+    dteec dteec,
+    date_lecteur date_lecteur
+    from
+    (
+
+    (
+
+SELECT
+    v.date AS DATE,
+    v.bmlcn_ZBK AS banque,
+    b.lib lib_bq,
+    COUNT(*) AS NBR_LCN_valide,
+    SUM(v.bmlcn_MNT + 0) sum_mnt,
+    DATE_FORMAT(STR_TO_DATE(bmlcn_dteec, '%d%m%Y'), '%d/%m/%Y') dteec,
+    CONCAT(date, '-', v.BMTN_lecteur) date_lecteur
+FROM
+    r_ncrm_extraction.tmp_tbl_suivi_LCN_sgma v,
+    r_ncrm_extraction.te_pcapt p,
+    r_ncrm_extraction.tr_banque b
+WHERE
+    1 = 1 and p.cdeBq="022" AND v.BMTN_lecteur = p.cdePcapt
+        AND dateReception IS NULL
+        AND v.bmlcn_ZBK = b.CDE
+         AND v.bmlcn_ZBK not like "1%"
+        AND v.bmlcn_ope_eta <> 'D'
+        AND (bmlcn_CONF = 1
+        OR (bmlcn_CONF = 0
+        AND bmlcn_CODE_ERREURS = 'ABOP'))
+        AND v.bmlcn_FLAG_IMP IS NULL
+        AND (v.bmlcn_REJET_DELTA <> '1'
+        OR v.bmlcn_REJET_DELTA IS NULL)
+		 and concat(date,v.BMTN_lecteur)in ($P!{listparams})
+		and  DATE_FORMAT(STR_TO_DATE(bmlcn_dteec, '%d%m%Y'),'%Y-%m-%d') > $P{dtePre}
+GROUP BY date , banque , STR_TO_DATE(bmlcn_dteec, '%d%m%Y')
+ORDER BY date , banque , STR_TO_DATE(bmlcn_dteec, '%d%m%Y')
+)
+union
+
+    (
+
+SELECT
+    v.date AS DATE,
+    "BCP" AS banque,
+    "BCP" lib_bq,
+    COUNT(*) AS NBR_LCN_valide,
+    SUM(v.bmlcn_MNT + 0) sum_mnt,
+    DATE_FORMAT(STR_TO_DATE(bmlcn_dteec, '%d%m%Y'), '%d/%m/%Y') dteec,
+    CONCAT(date, '-', v.BMTN_lecteur) date_lecteur
+FROM
+    r_ncrm_extraction.tmp_tbl_suivi_LCN_sgma v,
+    r_ncrm_extraction.te_pcapt p,
+    r_ncrm_extraction.tr_banque b
+WHERE
+    1 = 1
+and p.cdeBq="022"
+ AND v.BMTN_lecteur = p.cdePcapt
+        AND dateReception IS NULL
+        AND v.bmlcn_ZBK = b.CDE
+         AND v.bmlcn_ZBK like "1%"
+        AND v.bmlcn_ope_eta <> 'D'
+        AND (bmlcn_CONF = 1
+        OR (bmlcn_CONF = 0
+        AND bmlcn_CODE_ERREURS = 'ABOP'))
+        AND v.bmlcn_FLAG_IMP IS NULL
+        AND (v.bmlcn_REJET_DELTA <> '1'
+        OR v.bmlcn_REJET_DELTA IS NULL)
+       and concat(date,v.BMTN_lecteur)in ($P!{listparams})
+      and  DATE_FORMAT(STR_TO_DATE(bmlcn_dteec, '%d%m%Y'),'%Y-%m-%d') > $P{dtePre}
+GROUP BY date , v.bmlcn_ZBK like "1%" , STR_TO_DATE(bmlcn_dteec, '%d%m%Y')
+ORDER BY date , v.bmlcn_ZBK like "1%" , STR_TO_DATE(bmlcn_dteec, '%d%m%Y')
+)
+)as recup
+GROUP BY date , banque , STR_TO_DATE(dteec, '%d/%m/%Y')
+ORDER BY date , banque , STR_TO_DATE(dteec, '%d/%m/%Y')]]>
+	</queryString>
+	<field name="DATE" class="java.lang.String"/>
+	<field name="banque" class="java.lang.String"/>
+	<field name="lib_bq" class="java.lang.String"/>
+	<field name="NBR_LCN_valide" class="java.math.BigDecimal"/>
+	<field name="sum_mnt" class="java.lang.Double"/>
+	<field name="dteec" class="java.lang.String"/>
+	<field name="date_lecteur" class="java.lang.String"/>
+	<group name="bq">
+		<groupExpression><![CDATA[$F{banque}]]></groupExpression>
+		<groupHeader>
+			<band height="13">
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement style="table 1_CH" stretchType="RelativeToTallestObject" x="87" y="0" width="399" height="13" backcolor="#F0F0F0" uuid="c7ab9b70-e455-4630-93c8-bf96a45d3748"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="7"/>
+						<paragraph leftIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{banque}+" - "+$F{lib_bq}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="142" splitType="Stretch">
+			<staticText>
+				<reportElement x="151" y="39" width="290" height="22" uuid="3271eab7-8ec7-4921-b8ff-ac21476a21a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Etat récapitulatif des LCN à conserver par Banque
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="-319" y="75" width="284" height="16" forecolor="#000000" backcolor="#009EE0" uuid="4f4254d7-cf7a-4784-882c-ff189c99c5a0"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Candara" size="12" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement mode="Transparent" x="296" y="61" width="145" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="cc5c67d7-0bf3-4e74-a0c3-9c81a6fdf9b7"/>
+				<textElement verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dtePre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="table 1_TH" stretchType="RelativeToTallestObject" x="87" y="129" width="177" height="13" forecolor="#FFFFFF" backcolor="#009EE0" uuid="3c6c1f64-74d6-432c-9139-5c6a7678e4fd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[banque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 1_CH" stretchType="RelativeToTallestObject" x="332" y="129" width="68" height="13" forecolor="#FFFFFF" backcolor="#009EE0" uuid="be3dc91d-2077-4f47-8c10-c7bd9f368b4b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nbr Valide]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 1_CH" stretchType="RelativeToTallestObject" x="400" y="129" width="86" height="13" forecolor="#FFFFFF" backcolor="#009EE0" uuid="fc1193a9-d481-4d52-96a5-ad4b7fd2e6c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Montant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="table 1_CH" stretchType="RelativeToTallestObject" x="264" y="129" width="68" height="13" forecolor="#FFFFFF" backcolor="#009EE0" uuid="0eb78d72-1442-4707-a21a-a1ed3fb2ffac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Echeance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="61" width="145" height="20" uuid="e23bfebe-5178-47fb-85a7-216804d61039"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true" isItalic="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Date Presentation :]]></text>
+			</staticText>
+			<image>
+				<reportElement x="4" y="3" width="126" height="30" uuid="82e74288-78da-4126-8ede-3c180d901d82"/>
+				<imageExpression><![CDATA[".\\jrxml\\logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="13">
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="264" y="0" width="68" height="13" forecolor="#FF0033" backcolor="#FFFFFF" uuid="5027b9cf-d8a9-46cb-9f60-9cce126463c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dteec}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="332" y="0" width="68" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="902b05e8-5121-441f-b275-1de3e190a031"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NBR_LCN_valide}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement style="table 1_TD" stretchType="RelativeToTallestObject" mode="Opaque" x="400" y="0" width="86" height="13" forecolor="#000000" backcolor="#FFFFFF" uuid="fbc4c3ad-28ee-4b35-9da5-3963de732617"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Times New Roman" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum_mnt}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="82" y="2" width="116" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="052274bf-edf7-4f38-964b-10b3552bdffa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="1" width="76" height="12" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="96bed740-7c80-49ab-bf8e-1b64ccdd9756"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Crée Le        :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="532" y="4" width="50" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="70b53669-0357-481d-bc07-98a4f2f78034"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+"/" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Opaque" x="4" y="12" width="194" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="d4df5222-46b2-4008-b524-2255179917e3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Utilisateur : "+$P{username}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

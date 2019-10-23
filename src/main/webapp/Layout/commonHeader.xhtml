@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<h:body>
+	<ui:composition>
+
+		<div id="banner" class="banner" style="">
+			<div id="systemMessageConsole" style="display: none">
+				<p id="systemMessage">Fermer</p>
+			</div>
+			<div id="logo" class="sectionLeft"></div>
+			<div class="sectionLeft">
+			<h:form>
+<h:panelGrid columns="1" style="margin-top:5px;margin-left:35px;">
+			
+		
+
+	</h:panelGrid>
+				
+</h:form>
+			</div>
+			<div class="sectionRight searchContainer">
+				<!-- banner search -->
+
+		<!-- 		
+						<h:form>
+		
+	
+	<h:panelGrid columns="3" style="margin-top:3px;margin-right:10%;">
+				
+		  <h:commandButton action="#{language.changeLanguage('fr')}" value="francais" image="./resources/images/icon/fr.png" />
+		   --><!-- <h:outputText value="  " />
+		  <h:commandButton action="#{language.changeLanguage('en')}" value="Anglais" image="./resources/images/icon/uk.png" />
+<h:commandButton  action="#{loginBean.logout}" image="/resources/images/Logout2.png"></h:commandButton>
+	</h:panelGrid>
+      </h:form> -->
+					
+
+<form action="#{request.contextPath}/j_spring_security_logout">
+    <input type="submit" value="Logout"/>
+</form>
+
+
+			</div>
+			
+			<h:form id="formlougout">
+			<ul id="metaLinks" class="sectionRight">
+				<li id="userID" style="margin-top:3px;margin-right:10%;"><span id="casted"> </span> #{loginBean.username}</li>
+
+<!-- <li id="main_logOut" class="last">    </li> -->
+			</ul>
+			</h:form>
+		</div>
+
+	</ui:composition>
+</h:body>
+</html>

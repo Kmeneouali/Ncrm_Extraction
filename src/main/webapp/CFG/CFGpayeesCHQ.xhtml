@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+
+
+<h:head>
+
+	<h:title>NCRM-Extraction </h:title>
+
+</h:head>
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	<ui:composition template="/Layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<div class="content">
+				<div class="header ">
+					<div class="title">
+						<h2>
+							<h:outputText value="CFG-Reception du fichier des valeurs payées " />
+							<h:outputText value=" " />
+
+						</h2>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div id="resultsContainer" class="body">
+
+
+
+
+
+					<div
+						style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%">
+						<h:form id="form1">
+
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+								closable="false" resizable="false" showHeader="false">
+								<p:graphicImage name="images/progressbar.gif" />
+							</p:dialog>
+
+
+							<!-- Panel 1 -->
+
+							<p:panel id="horizontal" header="liste des valeurs chèques payés par banque "
+								toggleable="true">
+
+
+								<p:panelGrid style="margin-left: 0%">
+
+									<p:row>
+<p:column style="border-color: #ffffff ;"/>
+								
+
+										<p:column style="border-color: #ffffff ;">
+	<p:commandButton icon="ui-icon-gear"
+												value="Reception" 
+												title="Reception "
+												actionListener="#{paye_ChqCFGBean.ReptionFile}"
+												disabled="false"
+												update=":form1:listChq">
+											</p:commandButton>
+
+											
+
+
+
+
+
+
+										</p:column>
+
+
+
+									</p:row>
+
+
+
+
+
+								</p:panelGrid>
+
+
+
+
+
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Yes" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+								<p:messages id="messages" showDetail="true" autoUpdate="true"
+									closable="false"
+									style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 0%" />
+
+
+
+
+
+								<p:dataTable id="listChq" var="imp"
+									value="#{paye_ChqCFGBean.listCountpay}"
+									widgetVar="carsTable"
+									emptyMessage="" rows="10" paginator="true"
+									filteredValue="#{paye_ChqCFGBean.filterlistCountpay}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+									
+									
+	<!-- 															<f:facet name="header">
+	<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_EXPOITATION,ROLE_CFG">
+											<p:panelGrid style="width:60%;">
+
+												<p:row>
+
+													<p:column style="border-color: #ffffff ;width:">
+														<p:selectOneMenu id="Report" style=""
+															value="#{paye_ChqCFGBean.idreport}">
+															<f:selectItem itemLabel="Selectionner Etats"
+																itemValue="null" />
+
+															<f:selectItem
+																itemLabel="1- Etat des Valeurs en moin"
+																itemValue="valueMoin" />
+															<f:selectItem
+																itemLabel="2- Etat des Valeurs en plus"
+																itemValue="valuePlus" />
+
+
+															
+
+														</p:selectOneMenu>
+														<h:outputText value=" " />
+														<p:commandButton
+															actionListener="#{paye_ChqCFGBean.ImprimeReport}"
+															oncomplete="PF('dlg1').show()" update=":form1"
+															title="Editer Etat " value=" Editer"
+															icon=" ui-icon-print" style="" />
+													
+													</p:column>
+
+												</p:row>
+											</p:panelGrid>
+										</sec:authorize>
+									</f:facet> -->
+									
+
+							<p:column headerText="#{commun['dtetr']}">
+										<h:outputText value="#{imp.DTE}" />
+									</p:column>
+									
+									
+									<p:column headerText="#{commun['cdeBanque']}" filterBy="#{imp.ZBK}" filterMatchMode="contains">
+									  
+            
+										<h:outputText value="#{imp.ZBK}" />
+									</p:column>
+
+
+
+									<p:column headerText="Nbr Valeurs">
+										<h:outputText value="#{imp.countVal}" />
+									</p:column>
+
+									
+
+
+
+
+								</p:dataTable>
+
+							</p:panel>
+							
+							
+							
+							
+								<p:dialog header="Etat de Suivi" widgetVar="dlg1" modal="true"
+									height="100 ">
+
+									<p:ajax event="close"
+										listener="#{Suivi_ChqSGBean.deletepdftmp}" />
+									<p:media id="output" value="#{Suivi_ChqSGBean.pdfDocument}"
+										player="pdf" width="900" height="500" />
+
+
+
+
+								</p:dialog>
+
+
+						</h:form>
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+
+

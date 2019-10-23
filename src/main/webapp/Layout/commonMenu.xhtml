@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<h:body>
+	<ui:composition>
+
+		<div id="folders"
+			class="column decorated secondary sizeable maximized"
+			style="width: 247px">
+
+			<div class="content ">
+
+				<div class="header ">
+					<div class="title">
+					
+						<h:outputText value="#{commun['menu']}" />
+						
+					</div>
+					<h:form>
+
+
+						<p:panelMenu style="width:247px" toggleable="false">
+
+
+<!-- ********************************************************************************************************************************** -->
+												<!-- ALYOUSR (BPM) -->
+<!-- ********************************************************************************************************************************** -->
+ <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_BPM">
+							<p:submenu label="#{commun['Bpm']}">
+							
+							 <p:submenu label="#{commun['TrCHQ']} -BPM" icon="ui-icon-document">
+								<p:menuitem value="#{commun['SuiviSIcheque']}" outcome="/BPM/BpmGetSICHQ" icon="ui-icon-info" />
+								<p:menuitem value="#{commun['ExtrFichierLotCHQConf']}"  outcome="/BPM/BpmextractionlotChq" icon="ui-icon-gear" disabled="false"/>			
+								<p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/BPM/BpmetatsCHQ" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/BPM/BpmimpayeesCHQ" icon="ui-icon-gear" disabled="false	"/>
+								</p:submenu>
+								
+							 <p:submenu label="#{commun['trLCN']} -BPM"  icon="ui-icon-script" >
+								<p:menuitem value="#{commun['ExtrSILCN']}"  outcome="/BPM/BpmextractionSiLCN" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ExtrFichierLotConf']}"  outcome="/BPM/BpmextractionlotConf" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ExtrFichierLotInter']}" outcome="/BPM/BpmextractionlotIA" icon="ui-icon-gear" disabled="false"/>					
+								<p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/BPM/BpmetatsLCN" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/BPM/BpmimpayeesLCN" icon="ui-icon-gear" disabled="false"/>
+								</p:submenu>
+								
+								<p:submenu label="#{commun['SuiviCptAge']}"  icon="ui-icon-lightbulb">
+								<p:menuitem value="#{commun['CptsBPM']}"  outcome="/BPM/BpmGestionCpt"  icon="ui-icon-info" disabled="false"/>
+								<p:menuitem value="#{commun['AgesBPM']}"  outcome="/BPM/BpmGestionAgence" icon="ui-icon-info" disabled="false"/>					
+								</p:submenu>
+
+							</p:submenu>
+							</sec:authorize>
+<!-- ********************************************************************************************************************************** -->
+												<!-- UMNIA BANK (QMB) -->
+<!-- ********************************************************************************************************************************** -->
+							 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_QMB">
+                          <p:submenu label="#{commun['BpCIH']} ">
+                          <p:submenu label="#{commun['TrCHQ']} -QMB" icon="ui-icon-document">
+								<p:menuitem value="#{commun['SuiviSIcheque']}" outcome="/QMB/QmbGetSICHQ" icon="ui-icon-info" disabled="false"/>
+								<p:menuitem value="#{commun['ExtrFichierLotCHQConf']}"  outcome="/QMB/QmbextractionlotChq" icon="ui-icon-gear" disabled="false" />
+								<p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/QMB/QmbetatsCHQ" icon="ui-icon-gear" disabled="false"/>
+						<p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/QMB/QmbimpayeesCHQ" icon="ui-icon-gear" disabled="false	"/>
+								
+						</p:submenu>
+						
+						<p:submenu label="#{commun['trLCN']} -QMB"  icon="ui-icon-script" >
+						        <p:menuitem value="#{commun['ExtrSILCN']}"  outcome="/QMB/QmbextractionSiLCN" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ExtrFichierLotConf']}"  outcome="/QMB/QmbextractionlotConf" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ExtrFichierLotInter']}" outcome="/QMB/QmbextractionlotIA" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/QMB/QmbetatsLCN" icon="ui-icon-gear" disabled="false" />					
+						<p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/QMB/QmbimpayeesLCN" icon="ui-icon-gear" disabled="false"/>
+								
+								</p:submenu>
+								
+								<p:submenu label="#{commun['SuiviCptAge']}"  icon="ui-icon-lightbulb">
+								<p:menuitem value="#{commun['CptsBPM']}"  outcome="/QMB/QmbGestionCpt"  icon="ui-icon-info" disabled="false"/>
+								<p:menuitem value="#{commun['AgesBPM']}"  outcome="/QMB/QmbGestionAgence" icon="ui-icon-info" disabled="false"/>					
+								</p:submenu>
+								
+						</p:submenu>
+							</sec:authorize>
+
+							
+<!-- ********************************************************************************************************************************** -->
+												<!-- BTI  -->
+<!-- ********************************************************************************************************************************** -->		
+							
+							 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_BTI">
+							<p:submenu label="#{commun['BTI']}">
+							
+							 <p:submenu label="#{commun['TrCHQ']} -BTI" icon="ui-icon-document" >
+								<p:menuitem value="#{commun['SuiviSIcheque']}" outcome="/BTI/BtiGetSICHQ" icon="ui-icon-info" disabled="false"/>
+								<p:menuitem value="#{commun['ExtrFichierLotCHQConf']}"  outcome="/BTI/BtiextractionlotChq" icon="ui-icon-gear" disabled="false"/>			
+								<p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/BTI/BtietatsCHQ" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/BTI/BtiimpayeesCHQ" icon="ui-icon-gear" disabled="false"/>
+								</p:submenu>
+								
+							 <p:submenu label="#{commun['trLCN']} -BTI"  icon="ui-icon-script" >
+								<p:menuitem value="#{commun['ExtrSILCN']}"  outcome="/BTI/BtiextractionSiLCN" icon="ui-icon-gear" disabled="false"/>
+							<!-- 	<p:menuitem value="#{commun['ExtrFichierLotConf']}"  outcome="/BPM/BpmextractionlotConf" icon="ui-icon-gear" disabled="true"/>
+								<p:menuitem value="#{commun['ExtrFichierLotInter']}" outcome="/BPM/BpmextractionlotIA" icon="ui-icon-gear" disabled="true"/>	 -->				
+								<p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/BTI/BtietatsLCN" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/BPM/BpmimpayeesLCN" icon="ui-icon-gear" disabled="true"/>
+								</p:submenu>
+								
+								<p:submenu label="#{commun['SuiviCptAge']}"  icon="ui-icon-lightbulb">
+								<!-- <p:menuitem value="#{commun['CptsBPM']}"  outcome="/BPM/BpmGestionCpt"  icon="ui-icon-info" disabled="true"/> -->
+								<p:menuitem value="#{commun['AgesBPM']}"  outcome="/BTI/BtiGestionAgence" icon="ui-icon-info" disabled="false"/>					
+								</p:submenu>
+
+							</p:submenu>
+							</sec:authorize>
+							
+							
+							
+<!-- ********************************************************************************************************************************** -->
+												<!-- NAJMAH  -->
+<!-- ********************************************************************************************************************************** -->
+							
+							 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_NAJMAH">	
+						 <p:submenu label="NAJMAH  ">
+						  <p:submenu label="#{commun['TrCHQ']} NAJMAH" icon="ui-icon-document">
+						  <p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/NAJMAH/NAJMAHetatsCHQ" icon="ui-icon-gear" disabled="false"/>
+						<!--   <p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/SGMA/SGimpayeesCHQ" icon="ui-icon-gear" disabled="false"/> -->
+						  </p:submenu>
+						 <!--  <p:submenu label="#{commun['trLCN']} -SGDA" icon="ui-icon-document">
+						  <p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/SGMA/SGetatsLCN" icon="ui-icon-gear" disabled="false"/>
+						  <p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/SGMA/SGimpayeesLCN" icon="ui-icon-gear" disabled="false"/>
+						  </p:submenu> -->
+						  <!--  <p:menuitem value="Gestion point de capture"  outcome="/SGMA/SgmaGestionPcapts" icon="ui-icon-gear" disabled="true"/> -->
+						  <p:menuitem value="Gestion point de capture"  outcome="/NAJMAH/NAJMAHGestionPcapts" icon="ui-icon-gear" disabled="false"/>
+						 </p:submenu>
+						 </sec:authorize> 
+							
+							
+							
+							
+							
+							
+							
+							
+														
+<!-- ********************************************************************************************************************************** -->
+												<!-- PCDM  -->
+<!-- ********************************************************************************************************************************** -->		
+							
+							 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_PCDM">
+							<p:submenu label="#{commun['PCDM']}">
+							
+							 <p:submenu label="#{commun['TrCHQ']} -PCDM" icon="ui-icon-document" >
+								<p:menuitem value="#{commun['SuiviSIcheque']}" outcome="/PCDM/PcdmGetSICHQ" icon="ui-icon-info" disabled="false"/>
+								<p:menuitem value="#{commun['ExtrFichierLotCHQConf']}"  outcome="/PCDM/PcdmextractionlotChq" icon="ui-icon-gear" disabled="false"/>			
+								<p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/PCDM/PcdmetatsCHQ" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/PCDM/PcdmimpayeesCHQ" icon="ui-icon-gear" disabled="false"/>
+								</p:submenu>
+								
+							 <p:submenu label="#{commun['trLCN']} -PCDM"  icon="ui-icon-script" >
+								<p:menuitem value="#{commun['ExtrSILCN']}"  outcome="/PCDM/PcdmextractionSiLCN" icon="ui-icon-gear" disabled="false"/>
+							<!-- 	<p:menuitem value="#{commun['ExtrFichierLotConf']}"  outcome="/BPM/BpmextractionlotConf" icon="ui-icon-gear" disabled="true"/>
+								<p:menuitem value="#{commun['ExtrFichierLotInter']}" outcome="/BPM/BpmextractionlotIA" icon="ui-icon-gear" disabled="true"/>	 -->				
+								<p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/PCDM/PcdmetatsLCN" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/BPM/BpmimpayeesLCN" icon="ui-icon-gear" disabled="true"/>
+								</p:submenu>
+								
+								<p:submenu label="#{commun['SuiviCptAge']}"  icon="ui-icon-lightbulb">
+								<!-- <p:menuitem value="#{commun['CptsBPM']}"  outcome="/BPM/BpmGestionCpt"  icon="ui-icon-info" disabled="true"/> -->
+								<p:menuitem value="#{commun['AgesBPM']}"  outcome="/PCDM/PcdmGestionAgence" icon="ui-icon-info" disabled="false"/>					
+								</p:submenu>
+
+							</p:submenu>
+							</sec:authorize>
+							
+<!-- ********************************************************************************************************************************** -->
+												<!-- CFG -->
+<!-- ********************************************************************************************************************************** -->
+							<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_CFG">
+							<p:submenu label="CFG BANK ">
+							
+							 <p:submenu label="Traitement chèques CFG" icon="ui-icon-document" >
+								<p:menuitem value="Reception chèques payes" outcome="/CFG/CFGpayeesCHQ" icon="ui-icon-info" disabled="false"/>
+							  </p:submenu>
+							  
+							  <p:submenu label="Traitement LCNs CFG" icon="ui-icon-document" >
+								<p:menuitem value="Reception LCNs payes" outcome="/CFG/CFGpayeesLCN" icon="ui-icon-info" disabled="false"/>
+							  </p:submenu>
+							</p:submenu>
+							</sec:authorize>
+							
+<!-- ********************************************************************************************************************************** -->
+												<!-- BANK AL AAMAL  -->
+<!-- ********************************************************************************************************************************** -->
+							<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_BAA">
+							<p:submenu label="Banque AL AAMAL ">
+							<p:submenu label="#{commun['TrCHQ']} -BAA"  icon="ui-icon-script" >
+								
+								<p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/BAA/BaaetatsCHQ" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/BAA/BaaimpayeesCHQ" icon="ui-icon-gear" disabled="false	"/>
+							</p:submenu>
+							
+							<p:submenu label="#{commun['trLCN']} -BAA"  icon="ui-icon-script" >
+								<p:menuitem value="#{commun['ExtrSILCN']}"  outcome="/BAA/BaaextractionSiLCN" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/BAA/BaaetatsLCN" icon="ui-icon-gear" disabled="false"/>
+								<p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/BAA/BaaimpayeesLCN" icon="ui-icon-gear" disabled="false"/>
+							</p:submenu>
+							<p:submenu label="#{commun['SuiviCptAge']}"  icon="ui-icon-lightbulb">
+								<p:menuitem value="#{commun['CptsBPM']}"  outcome="/BAA/BaaGestionCpt"  icon="ui-icon-info" disabled="false"/> 
+								<p:menuitem value="#{commun['AgesBPM']}"  outcome="/BAA/BaaGestionAgence" icon="ui-icon-info" disabled="false"/>					
+								</p:submenu>
+							
+							</p:submenu>
+							</sec:authorize>
+							
+							
+							
+							
+<!-- ********************************************************************************************************************************** -->
+												<!-- SGDA  -->
+<!-- ********************************************************************************************************************************** -->
+							
+							 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SGDA">	
+						 <p:submenu label="DAR AL AMANE  ">
+						  <p:submenu label="#{commun['TrCHQ']} -SGDA" icon="ui-icon-document">
+						  <p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/SGDA/SGDAetatsCHQ" icon="ui-icon-gear" disabled="false"/>
+						<!--   <p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/SGMA/SGimpayeesCHQ" icon="ui-icon-gear" disabled="false"/> -->
+						  </p:submenu>
+						 <!--  <p:submenu label="#{commun['trLCN']} -SGDA" icon="ui-icon-document">
+						  <p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/SGMA/SGetatsLCN" icon="ui-icon-gear" disabled="false"/>
+						  <p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/SGMA/SGimpayeesLCN" icon="ui-icon-gear" disabled="false"/>
+						  </p:submenu> -->
+						   <p:menuitem value="Gestion point de capture"  outcome="/SGDA/SGDAGestionPcapts" icon="ui-icon-gear" disabled="false"/>
+						 
+						 </p:submenu>
+						 </sec:authorize> 
+						
+						
+							
+							
+							
+<!-- ********************************************************************************************************************************** -->
+												<!-- SGMA -->
+<!-- ********************************************************************************************************************************** -->
+							
+							 <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SGMA">	
+						 <p:submenu label="#{commun['SGMA']} ">
+						  <p:submenu label="#{commun['TrCHQ']} -SGMA" icon="ui-icon-document">
+						 <!--  <p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/SGMA/SgmaetatsCHQ" icon="ui-icon-gear" disabled="false"/> -->
+						  <p:menuitem value="#{commun['bpmetatsChq']}"  outcome="/SGMA/SGetatsCHQ" icon="ui-icon-gear" disabled="false"/>
+						<!--   <p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/SGMA/SgmaimpayeesCHQ" icon="ui-icon-gear" disabled="true"/> -->
+						  <p:menuitem value="#{commun['ImpayeesChq']}"  outcome="/SGMA/SGimpayeesCHQ" icon="ui-icon-gear" disabled="false"/>
+						  </p:submenu>
+						  <p:submenu label="#{commun['trLCN']} -SGMA" icon="ui-icon-document">
+						 <!--  <p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/SGMA/SgmaetatsLCN" icon="ui-icon-gear" disabled="false"/> -->
+						  <p:menuitem value="#{commun['bpmetatsLCN']}"  outcome="/SGMA/SGetatsLCN" icon="ui-icon-gear" disabled="false"/>
+						  <p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/SGMA/SGimpayeesLCN" icon="ui-icon-gear" disabled="false"/>
+						  <!-- <p:menuitem value="#{commun['ImpayeesLCN']}"  outcome="/SGMA/SgmaimpayeesLCN" icon="ui-icon-gear" disabled="true"/> -->
+						  </p:submenu>
+						   <p:menuitem value="Gestion point de capture"  outcome="/SGMA/SgmaGestionPcapts" icon="ui-icon-gear" disabled="false"/>
+						 
+						 </p:submenu>
+						 </sec:authorize> 
+
+<!-- ********************************************************************************************************************************** -->
+												<!-- Exploitation -->
+<!-- ********************************************************************************************************************************** -->
+  <sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_EXPOITATION,ROLE_SUPEXPOITATION">	
+						 <p:submenu label="NCRM EXPLOITATION ">
+						  <p:submenu label="SGMA Suivi Physique" icon="ui-icon-document">
+						  <p:menuitem value="Suivi Physique chèques"  outcome="/SGMA/SgmaSuiviCHQ" icon="ui-icon-gear" disabled="false"/>
+						  <!--  <sec:authorize ifAnyGranted="ROLE_ADMIN">	
+						   <p:menuitem value="Detail Suivi Physique chèques"  outcome="/SGMA/SgmaDetailSuiviCHQ" icon="ui-icon-gear" disabled="false"/> 
+						   </sec:authorize> -->
+					      <p:menuitem value="Suivi Physique LCNs"  outcome="/SGMA/SgmaSuiviLCN" icon="ui-icon-gear" disabled="false"/>
+						 
+						  </p:submenu>
+						  </p:submenu>
+						 </sec:authorize> 
+
+
+
+
+
+						</p:panelMenu>
+
+                    
+
+					
+
+
+					</h:form>
+
+
+
+
+				</div>
+
+				<div id="foldersPodContent" class="body ">
+
+					<h:form id="form" method="post">
+
+
+					</h:form>
+
+				</div>
+
+			</div>
+		</div>
+
+	</ui:composition>
+</h:body>
+</html>

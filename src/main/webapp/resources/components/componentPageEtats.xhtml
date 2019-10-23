@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    
+    <composite:interface>
+    <composite:attribute name="header" />
+    	<composite:attribute name="nameLabledatetr" />
+    	<composite:attribute name="datetr" />
+    	
+   		<composite:attribute name="extraireetatsButtonText" />
+    	<composite:attribute name="extraireetatsButtonAction" method-signature="void action(java.lang.String ,java.lang.String )"  />
+    		
+    </composite:interface>
+	
+	<composite:implementation>
+	
+	
+	<h:form id="form1">
+
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+								closable="false" resizable="false" showHeader="false">
+								<p:graphicImage name="images/progressbar.gif" />
+							</p:dialog>
+
+
+							<!-- Panel 1 -->
+
+							<p:panel id="horizontal" header="#{cc.attrs.header}" toggleable="true" style="  margin-bottom:5px">
+								
+								<!-- Panel Searsh  -->
+								<p:panelGrid
+									style="margin: 0 auto">
+
+									<p:row>
+
+										<p:column style="border-color: #ffffff ;">
+											<p:outputLabel value="#{cc.attrs.nameLabledatetr}" />
+										</p:column>
+										<p:column style="border-color: #ffffff ;">
+											<p:calendar id="button" value="#{cc.attrs.datetr}"  pattern="dd-MM-yyyy" mask="true" />
+										</p:column>
+
+
+
+										<p:column style="border-color: #ffffff ;">
+											<p:commandButton icon="ui-icon-arrowthickstop-1-s "
+												style="" title="#{commun['btnExtraire']}" 
+												actionListener="#{cc.attrs.extraireetatsButtonAction}" 
+				                                value="#{cc.attrs.extraireetatsButtonText}"
+												
+												>
+											</p:commandButton>
+
+
+
+
+										</p:column>
+
+									</p:row>
+
+								</p:panelGrid>
+
+								<p:messages id="messages" showDetail="true" autoUpdate="true" closable="false" style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%" />
+
+
+							</p:panel>
+
+
+						</h:form>
+	
+	
+	
+		
+	</composite:implementation>
+	
+</html>

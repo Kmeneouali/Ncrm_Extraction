@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+
+	<h:title>NCRM-Extraction </h:title>
+
+</h:head>
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	<ui:composition template="/Layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<div class="content">
+				<div class="header ">
+					<div class="title">
+						<h2>
+							<h:outputText value="#{commun['cptBPM']} BAA"  />
+							<h:outputText value=" " />
+							
+						</h2>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div id="resultsContainer" class="body">
+
+
+
+
+
+					<div
+						style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%">
+						<h:form id="form1">
+							
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+								closable="false" resizable="false" showHeader="false">
+								<p:graphicImage name="images/progressbar.gif" />
+							</p:dialog>
+
+
+							<!-- Panel 1 -->
+
+							<p:panel id="horizontal" header="#{commun['listcptsBpm']}"
+								toggleable="true" style="  margin-bottom:5px">
+
+<p:messages id="messages" showDetail="true" autoUpdate="true"
+									closable="false"
+									style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%" />
+
+
+
+								<p:dataTable id="listCpts" var="cpt"
+									value="#{Gestion_cptBAABean.comptes}"
+									filteredValue="#{Gestion_cptBAABean.selectCpts}"
+									 emptyMessage="" rows="20"
+									paginator="true"
+									widgetVar="cptsTable"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+ 
+ <p:column filterBy="#{cpt.CLIENT}" headerText="#{commun['client']}" filterMatchMode="startsWith">
+            <f:facet name="filter">
+            <p:selectOneMenu id="cdecpt" filter="true"
+                                                onchange="PF('cptsTable').filter()"
+												value="#{Gestion_cptBAABean.cdecpt}" style="width:200px">
+												<f:selectItem itemLabel="#{commun['All-Comptes']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems value="#{Gestion_cptBAABean.comptes}"
+													var="cpt" itemLabel="#{cpt.CLIENT}"
+													itemValue="#{cpt.CLIENT}" />
+											</p:selectOneMenu>
+            
+            
+            
+            
+       
+                          </f:facet>
+										
+										<h:outputText value="#{cpt.CLIENT}" />
+									</p:column>
+ 
+ 
+ <p:column filterBy="#{cpt.CPT}" headerText="#{commun['compte']}" filterMatchMode="startsWith">
+            <f:facet name="filter">
+            <p:selectOneMenu id="nameClient" filter="true"
+                                                onchange="PF('cptsTable').filter()"
+												value="#{Gestion_cptBAABean.cdecpt}" style="width:200px">
+												<f:selectItem itemLabel="#{commun['All-Client']}"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems value="#{Gestion_cptBAABean.comptes}"
+													var="cpt" itemLabel="#{cpt.CPT}"
+													itemValue="#{cpt.CPT}" />
+											</p:selectOneMenu>
+            
+            
+            
+            
+       
+                          </f:facet>
+										<h:outputText value="#{cpt.CPT}" />
+									</p:column>
+
+<p:column headerText="#{commun['agence']}" >
+         
+										<h:outputText value="#{cpt.AGE}"/>
+									</p:column>
+        
+<p:column 
+										headerText="#{commun['tiers']}">
+										<h:outputText value="#{cpt.TIERS}"/>
+									</p:column>
+       <p:column 
+										headerText="#{commun['dateInsertion']}">
+										<h:outputText value="#{cpt.DTEINS}"/>
+									</p:column>
+
+       
+
+								</p:dataTable>
+								
+							</p:panel>
+
+
+													</h:form>
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+
+
+			
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+
+

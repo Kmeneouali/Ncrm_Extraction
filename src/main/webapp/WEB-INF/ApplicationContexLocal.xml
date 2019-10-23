@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+		
+		
+   
+		
+		
+	<!-- ############################################################################## -->
+						<!-- le gestionnaire de transactions -->
+   <!-- ############################################################################## -->
+	
+	<tx:annotation-driven transaction-manager="jpaTransactionManager" />
+	<bean id="jpaTransactionManagerlocal" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="localContainerEntityManagerFactoryBeanlocal" />
+	</bean>
+	
+ 	
+	<!-- ############################################################################## -->
+						 <!-- couche de persistance JPA -->
+   <!-- ############################################################################## -->
+	
+	<bean id="localContainerEntityManagerFactoryBeanlocal"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="classpath:config/persistence.xml" />
+        <property name="persistenceUnitName" value="local" />  
+		<property name="dataSource" ref="basicDataSourcelocal" />
+		<property name="jpaVendorAdapter">
+			<bean id="hibernateJpaVendorAdapterlocal"
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+				<property name="generateDdl" value="false" />
+				<property name="showSql" value="false"></property>
+			</bean>
+		</property>
+		<property name="loadTimeWeaver">
+			<bean id="instrumentationLoadTimeWeaverlocal"
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<!-- ############################################################################## -->
+					<!-- DataSource -->
+   <!-- ############################################################################## -->
+	
+	
+	
+	<bean id="basicDataSourcelocal" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://172.17.0.4:3306/" />
+		<property name="username" value="root" />
+		<property name="password" value="fast" />
+		<property name="maxIdle" value="5"/>
+        <property name="maxActive" value="20"/>
+        <property name="minIdle" value="5"/>
+        <property name="validationQuery" value="SELECT 1"/>
+	</bean>
+	
+	
+	
+	
+
+
+</beans>

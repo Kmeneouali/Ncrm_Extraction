@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+
+
+<h:head>
+
+	<h:title>NCRM-Extraction </h:title>
+
+</h:head>
+
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	<ui:composition template="/Layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<div class="content">
+				<div class="header ">
+					<div class="title">
+						<h2>
+							<h:outputText value="SGMA-Suivi physique chèque" />
+							<h:outputText value=" " />
+
+						</h2>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div id="resultsContainer" class="body">
+
+
+
+
+
+					<div
+						style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%">
+						<h:form id="form1">
+
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+								closable="false" resizable="false" showHeader="false">
+								<p:graphicImage name="images/progressbar.gif" />
+							</p:dialog>
+
+
+							<!-- Panel 1 -->
+
+							<p:panel id="horizontal"
+								header="Liste des valeurs chèques non reçues" toggleable="true"
+								style="  margin-bottom:5px">
+								<!-- Panel Searsh  -->
+								<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_SUPEXPOITATION">
+									<p:panelGrid style="margin: 0 auto">
+
+										<p:row>
+
+											<p:column style="border-color: #ffffff ;">
+												<p:outputLabel value="#{commun['dtetr']}-1" />
+											</p:column>
+											<p:column style="border-color: #ffffff ;">
+												<p:calendar id="dtetr1" value="#{Suivi_ChqSGBean.datetr1}"
+													pattern="dd-MM-yyyy" mask="true" />
+											</p:column>
+
+
+
+											<p:column style="border-color: #ffffff ;">
+
+
+											</p:column>
+
+										</p:row>
+
+
+										<p:row>
+
+
+
+											<p:column style="border-color: #ffffff ;">
+												<p:outputLabel value="#{commun['dtetr']}-2" />
+											</p:column>
+											<p:column style="border-color: #ffffff ;">
+												<p:calendar id="dtetr2" value="#{Suivi_ChqSGBean.datetr2}"
+													pattern="dd-MM-yyyy" mask="true" />
+											</p:column>
+
+											<p:column style="border-color: #ffffff ;">
+												<p:commandButton icon="ui-icon-arrowthickstop-1-s "
+													value="Synchron" style="" title="Synchron"
+													update="form1:checkboxDT"
+													actionListener="#{Suivi_ChqSGBean.synchrontable}">
+												</p:commandButton>
+
+											</p:column>
+
+										</p:row>
+
+								
+									</p:panelGrid>
+								</sec:authorize>
+								<p:messages id="messages" showDetail="true" autoUpdate="true"
+									closable="false"
+									style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%" />
+
+
+
+
+								<p:dataTable id="checkboxDT" widgetVar="listRecupPhysiquTable"
+									var="p" value="#{Suivi_ChqSGBean.listRecupPhysiqu}"
+									selection="#{Suivi_ChqSGBean.selectedlistRecupPhysiqu}"
+									rowKey="#{p.DATE_LECTEUR}" style="" emptyMessage="" rows="20"
+									paginator="true"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="10,20,30" paginatorPosition="bottom">
+
+									<f:facet name="header">
+	<sec:authorize ifAnyGranted="ROLE_ADMIN,ROLE_EXPOITATION">
+											<p:panelGrid style="width:60%;">
+
+												<p:row>
+
+													<p:column style="border-color: #ffffff ;width:">
+														<p:selectOneMenu id="Report" style=""
+															value="#{Suivi_ChqSGBean.idreport}">
+															<!-- <f:selectItem itemLabel="Selectionner Etats"
+																itemValue="null" /> -->
+
+															<f:selectItem
+																itemLabel="1- Etat Recap par point de capture "
+																itemValue="RecupParPcapt" />
+															<f:selectItem
+																itemLabel="2- Etat Detail par point de capture "
+																itemValue="DetailParPcapt" />
+
+
+															<f:selectItem itemLabel="3- Etat Recap par banque "
+																itemValue="RecupPrBq" />
+															<f:selectItem itemLabel="4- Etat Detail par banque"
+																itemValue="DetailPrBq" />
+
+														</p:selectOneMenu>
+														<h:outputText value=" " />
+														<p:commandButton
+															actionListener="#{Suivi_ChqSGBean.ImprimeReport}"
+															oncomplete="PF('dlg1').show()" update=":form1"
+															title="Editer Etat " value=" Editer"
+															icon=" ui-icon-print" style="" />
+
+
+														<p:commandButton action="#{Suivi_ChqSGBean.EditerRec}"
+															update=":form1"
+															title="Editer le fichier de reconciliation  "
+															value=" Rec" icon=" ui-icon-script" style="" />
+
+														<p:commandButton
+															action="#{Suivi_ChqSGBean.ValiderReception}"
+															title="Valider la reception " icon="ui-icon-check"
+															value=" Valider" update=":form1">
+															<p:confirm header="Confirmation" message="êtes-vous sûr?"
+																icon="ui-icon-alert" />
+														</p:commandButton>
+													
+													</p:column>
+
+												</p:row>
+											</p:panelGrid>
+										</sec:authorize>
+									</f:facet>
+									<p:column selectionMode="multiple"
+										style="width:10%;text-align:center" />
+									<p:column headerText="DATE" style="width:20%;text-align:center">
+										<h:outputText value="#{p.DATE}" />
+									</p:column>
+									<p:column headerText="Circuit" style="width:25%;"
+										filterMatchMode="startsWith" filterBy="#{p.circuit}">
+
+										<h:outputText value="#{p.circuit}" />
+									</p:column>
+									<p:column headerText="Lecteur" style="width:60%; "
+										filterMatchMode="startsWith" filterBy="#{p.LECTEUR}">
+
+										<h:outputText value="#{p.LECTEUR} - #{p.LECTEUR_LIB}" />
+									</p:column>
+
+									<p:column headerText="NBR Dec"
+										style="width:10%;text-align:center">
+										<h:outputText value="#{p.NBR_CHQ_DEC}" />
+									</p:column>
+									<p:column headerText="NBR Valide"
+										style="width:10%;text-align:center">
+										<h:outputText value="#{p.NBR_CHQ_TRT}" />
+									</p:column>
+									<p:column headerText="NBR SUP"
+										style="width:10%;text-align:center">
+										<h:outputText value="#{p.NBR_CHQ_SUPP}" />
+									</p:column>
+									<p:column headerText="NBR VF"
+										style="width:10%;text-align:center">
+										<h:outputText value="#{p.NBR_CHQ_VF}" />
+									</p:column>
+									<p:column headerText="NBR RD"
+										style="width:10%;text-align:center">
+										<h:outputText value="#{p.NBR_CHQ_RD}" />
+									</p:column>
+									<p:column headerText="NBR IMP"
+										style="width:10%;text-align:center">
+										<h:outputText value="#{p.NBR_CHQ_IMP}" />
+									</p:column>
+									<f:facet name="footer">
+									
+
+									</f:facet>
+								</p:dataTable>
+
+								<p:dialog header="Etat de Suivi" widgetVar="dlg1" modal="true"
+									height="100 ">
+
+									<p:ajax event="close"
+										listener="#{Suivi_ChqSGBean.deletepdftmp}" />
+									<p:media id="output" value="#{Suivi_ChqSGBean.pdfDocument}"
+										player="pdf" width="900" height="500" />
+
+
+
+
+								</p:dialog>
+
+								<p:confirmDialog global="true" showEffect="fade"
+									hideEffect="fade">
+									<p:commandButton value="Yes" type="button"
+										styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+									<p:commandButton value="No" type="button"
+										styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+								</p:confirmDialog>
+
+							</p:panel>
+
+
+
+
+
+
+
+
+
+							<p:dialog header="Selected Cars" widgetVar="multiCarDialog"
+								modal="true" showEffect="fade" hideEffect="fade"
+								resizable="false" width="220">
+								<p:outputPanel id="multiCarDetail" style="text-align:center;">
+									<ui:repeat value="#{Suivi_ChqSGBean.selectedlistRecupPhysiqu}"
+										var="c">
+										<h:outputText value="#{c.DATE} - #{c.LECTEUR}"
+											style="display:block" />
+									</ui:repeat>
+								</p:outputPanel>
+							</p:dialog>
+
+
+
+						</h:form>
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+
+
+
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+
+</html>
+
+

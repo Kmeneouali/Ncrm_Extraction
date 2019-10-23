@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Etat_anomalies_LCN" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="589" leftMargin="3" rightMargin="3" topMargin="5" bottomMargin="20" uuid="f86c238e-221b-427e-9690-b3e34d09f070">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#FAEBD7">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#FFE4BF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<pen lineStyle="Dashed"/>
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="dateInstance" class="java.util.Date"/>
+	<parameter name="pointCapture" class="java.lang.String"/>
+	<parameter name="cdepointCapture" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="agenceRemise" class="java.lang.String">
+		<fieldDescription><![CDATA[agenceRemise]]></fieldDescription>
+	</field>
+	<field name="agenceemettrice" class="java.lang.String">
+		<fieldDescription><![CDATA[agenceemettrice]]></fieldDescription>
+	</field>
+	<field name="anoRem" class="java.lang.String">
+		<fieldDescription><![CDATA[anoRem]]></fieldDescription>
+	</field>
+	<field name="anolcn" class="java.lang.String">
+		<fieldDescription><![CDATA[anolcn]]></fieldDescription>
+	</field>
+	<field name="bmtaRefTa" class="java.lang.String">
+		<fieldDescription><![CDATA[bmtaRefTa]]></fieldDescription>
+	</field>
+	<field name="codeBanque" class="java.lang.String">
+		<fieldDescription><![CDATA[codeBanque]]></fieldDescription>
+	</field>
+	<field name="compteBeneficiere" class="java.lang.String">
+		<fieldDescription><![CDATA[compteBeneficiere]]></fieldDescription>
+	</field>
+	<field name="datetr" class="java.util.Date">
+		<fieldDescription><![CDATA[datetr]]></fieldDescription>
+	</field>
+	<field name="idAnomalie" class="java.lang.Long">
+		<fieldDescription><![CDATA[idAnomalie]]></fieldDescription>
+	</field>
+	<field name="lcn_ope_eta" class="java.lang.String">
+		<fieldDescription><![CDATA[lcn_ope_eta]]></fieldDescription>
+	</field>
+	<field name="montantlcn" class="java.lang.Double">
+		<fieldDescription><![CDATA[montantlcn]]></fieldDescription>
+	</field>
+	<field name="motifRejetRemise" class="java.lang.String">
+		<fieldDescription><![CDATA[motifRejetRemise]]></fieldDescription>
+	</field>
+	<field name="motifRejetlcn" class="java.lang.String">
+		<fieldDescription><![CDATA[motifRejetlcn]]></fieldDescription>
+	</field>
+	<field name="numCompte" class="java.lang.String">
+		<fieldDescription><![CDATA[numCompte]]></fieldDescription>
+	</field>
+	<field name="numlcn" class="java.lang.String">
+		<fieldDescription><![CDATA[numlcn]]></fieldDescription>
+	</field>
+	<field name="pcaptLib" class="java.lang.String">
+		<fieldDescription><![CDATA[pcaptLib]]></fieldDescription>
+	</field>
+	<field name="refRemise" class="java.lang.String">
+		<fieldDescription><![CDATA[refRemise]]></fieldDescription>
+	</field>
+	<field name="tr_ope_eta" class="java.lang.String">
+		<fieldDescription><![CDATA[tr_ope_eta]]></fieldDescription>
+	</field>
+	<field name="dteEchee" class="java.lang.String">
+		<fieldDescription><![CDATA[dteEchee]]></fieldDescription>
+	</field>
+	<field name="lecteur" class="java.lang.String">
+		<fieldDescription><![CDATA[lecteur]]></fieldDescription>
+	</field>
+	<field name="mntRem" class="java.lang.Double">
+		<fieldDescription><![CDATA[mntRem]]></fieldDescription>
+	</field>
+	<field name="seqlcn" class="java.lang.String">
+		<fieldDescription><![CDATA[seqlcn]]></fieldDescription>
+	</field>
+	<variable name="montantlcn_1" class="java.lang.Double" resetType="Group" resetGroup="Gr_Remise" calculation="Sum">
+		<variableExpression><![CDATA[$F{montantlcn}]]></variableExpression>
+	</variable>
+	<group name="Gr_agence_Emetrice">
+		<groupExpression><![CDATA[$F{agenceemettrice}]]></groupExpression>
+		<groupHeader>
+			<band height="10">
+				<staticText>
+					<reportElement uuid="a2e1b87f-9490-4794-8f13-6d12dd37e05e" style="table 1_TH" mode="Transparent" x="0" y="0" width="107" height="10" forecolor="#008351" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<text><![CDATA[ Agence Emettrice :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="2ccdc271-d4d8-46c1-a0bc-41a76a815e76" style="table 1_TH" mode="Transparent" x="107" y="0" width="481" height="10" forecolor="#008351" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{agenceemettrice}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Gr_Remise">
+		<groupExpression><![CDATA[$F{refRemise}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement uuid="3dec7ce3-22c4-4b6a-a992-efbb08a7fb4a" style="table 1_TH" mode="Opaque" x="0" y="10" width="58" height="10" forecolor="#000000" backcolor="#E4E4E4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[N°LCN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3dec7ce3-22c4-4b6a-a992-efbb08a7fb4a" style="table 1_TH" mode="Opaque" x="58" y="10" width="109" height="10" forecolor="#000000" backcolor="#E4E4E4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[N°Compte]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3dec7ce3-22c4-4b6a-a992-efbb08a7fb4a" style="table 1_TH" mode="Opaque" x="338" y="10" width="84" height="10" forecolor="#000000" backcolor="#E4E4E4"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<text><![CDATA[Montant]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6e4d0441-fed4-45c3-8036-2feaa0b9e149" style="table 1_TH" mode="Opaque" x="422" y="10" width="166" height="10" forecolor="#000000" backcolor="#E4E4E4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Motif de suppression LCN]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3dec7ce3-22c4-4b6a-a992-efbb08a7fb4a" style="table 1_TH" mode="Opaque" x="282" y="10" width="56" height="10" forecolor="#000000" backcolor="#E4E4E4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<text><![CDATA[dte Echeance]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement uuid="5db219e9-32db-4750-9ee0-5c3f62170630" style="table 1_TD" x="107" y="0" width="175" height="10"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Courier New" size="7" isBold="true"/>
+						<paragraph leftIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{refRemise}]]></textFieldExpression>
+				</textField>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement uuid="0cbb40ae-6788-4b50-bef0-e755ead60a6c" style="table 1_TD" mode="Transparent" x="422" y="0" width="166" height="10" forecolor="#FF0033" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{motifRejetRemise}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="6e4d0441-fed4-45c3-8036-2feaa0b9e149" style="table 1_TH" mode="Opaque" x="282" y="0" width="140" height="10" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<text><![CDATA[Motif de suppression Remise]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="024d733a-3a0d-47f8-a149-208f5b2ded0c" style="table 1_TH" mode="Opaque" x="0" y="0" width="107" height="10" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<text><![CDATA[Ref Remise]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0b9ce25b-488e-4073-8715-460fc7ff22ee" style="table 1_TH" mode="Opaque" x="167" y="10" width="81" height="10" forecolor="#000000" backcolor="#E4E4E4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<text><![CDATA[Compte Bénéficiare :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0b9ce25b-488e-4073-8715-460fc7ff22ee" style="table 1_TH" mode="Opaque" x="248" y="10" width="34" height="10" forecolor="#000000" backcolor="#E4E4E4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<text><![CDATA[SEQ]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<line>
+					<reportElement uuid="1df2296e-978f-4d55-b777-3fc060c728e3" x="5" y="16" width="575" height="1"/>
+					<graphicElement>
+						<pen lineStyle="Dashed" lineColor="#CCCCCC"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement uuid="024d733a-3a0d-47f8-a149-208f5b2ded0c" style="table 1_TH" mode="Opaque" x="422" y="0" width="61" height="10" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<text><![CDATA[Montant Rejeté]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="024d733a-3a0d-47f8-a149-208f5b2ded0c" style="table 1_TH" mode="Opaque" x="167" y="0" width="81" height="10" forecolor="#000000" backcolor="#CCCCCC"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" leftIndent="2"/>
+					</textElement>
+					<text><![CDATA[Montant declaré ]]></text>
+				</staticText>
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement uuid="5db219e9-32db-4750-9ee0-5c3f62170630" style="table 1_TD" mode="Opaque" x="484" y="0" width="104" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{montantlcn_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="true">
+					<reportElement uuid="5db219e9-32db-4750-9ee0-5c3f62170630" style="table 1_TD" mode="Opaque" x="248" y="0" width="128" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+						<font fontName="Courier New" size="7" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single" rightIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{mntRem}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="120" splitType="Stretch">
+			<image>
+				<reportElement uuid="63b680cb-a9b4-4323-935b-813dc3cdbd96" x="1" y="15" width="156" height="23"/>
+				<imageExpression><![CDATA[".\\TemplateEtats\\logos\\bmci.jpg"]]></imageExpression>
+			</image>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement uuid="14cf5083-64d4-4abc-9d5c-d0a3bc46727b" mode="Transparent" x="178" y="84" width="288" height="12" forecolor="#008351" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Point capture : "+$P{cdepointCapture}+"-"+$P{pointCapture}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement uuid="0a65988c-d232-4bf6-b12e-add9ad09c03a" mode="Transparent" x="343" y="72" width="86" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateInstance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e9b8a248-4b9d-4870-aca1-4c235708efe8" mode="Transparent" x="200" y="72" width="143" height="12" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Date de Traitement :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3271eab7-8ec7-4921-b8ff-ac21476a21a8" x="176" y="38" width="290" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Etat des anomalies
+Traitement des remises LCNs]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0c59a841-bdd3-49cf-a2fb-a4a247f567c0" style="table 1_TD" x="0" y="0" width="58" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numlcn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="172acb8e-db7c-456d-aabf-756450595940" style="table 1_TD" x="58" y="0" width="109" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numCompte}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="51eba665-353d-4132-b401-50d83de2429e" style="table 1_TD" x="338" y="0" width="84" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7" isBold="false"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montantlcn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e83263ec-d8dd-454f-bf40-6e876b45bc4f" style="table 1_TD" x="422" y="0" width="166" height="10" forecolor="#FF0033"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{motifRejetlcn}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="172acb8e-db7c-456d-aabf-756450595940" style="table 1_TD" x="282" y="0" width="56" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dteEchee}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8acda42f-d9ae-42e4-a764-70343b7f2310" style="table 1_TD" mode="Transparent" x="167" y="0" width="81" height="10" forecolor="#000000" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compteBeneficiere}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="172acb8e-db7c-456d-aabf-756450595940" style="table 1_TD" x="248" y="0" width="34" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="7" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{seqlcn}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="23">
+			<staticText>
+				<reportElement uuid="fc9c95cf-3997-4172-860c-5bb7abd22a7f" mode="Opaque" x="4" y="3" width="72" height="10" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Date Traitement :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="052274bf-edf7-4f38-964b-10b3552bdffa" mode="Opaque" x="82" y="12" width="116" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="d8384748-6b32-4f49-ae86-5e46cd0a9f75" mode="Opaque" x="117" y="3" width="305" height="10" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["|Point de Capture : "+$P{cdepointCapture}+" - " +$P{pointCapture}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
+				<reportElement uuid="d8384748-6b32-4f49-ae86-5e46cd0a9f75" mode="Transparent" x="78" y="3" width="53" height="10" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{dateInstance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="96bed740-7c80-49ab-bf8e-1b64ccdd9756" mode="Opaque" x="5" y="11" width="71" height="12" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Crée Le        :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="70b53669-0357-481d-bc07-98a4f2f78034" mode="Opaque" x="478" y="4" width="50" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="" isBlankWhenNull="false">
+				<reportElement uuid="74507f8e-6bb3-47a1-8b73-2a81ad0e3695" mode="Opaque" x="510" y="4" width="40" height="9" forecolor="#CCCCCC" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="7" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

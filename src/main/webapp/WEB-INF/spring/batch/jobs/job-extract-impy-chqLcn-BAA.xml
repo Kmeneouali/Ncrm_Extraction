@@ -1,0 +1,119 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 
+    
+    <import resource="../../../ApplicationContexBAA.xml" />
+    
+    <!-- JobRepository and JobLauncher are configuration/setup classes -->
+    <bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean" />
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository" />
+    </bean>
+    
+    <!-- ItemReader which reads from database and returns the row mapped by rowMapper -->
+    <bean id="databaseItemReaderCHQ" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+        <property name="dataSource" ref="basicDataSourceBaa_chq" />
+        <property name="sql" value="#{jobParameters[req]}"/>	
+	<property name="rowMapper">
+		<bean class="com.ncrm.SprBatch.impchqRowMapper" />
+	</property>
+    </bean>
+    <!-- ItemWriter writes a line into output flat file -->
+    <bean id="flatFileItemWriterCHQ" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+        <property name="resource" value="file:#{jobParameters[resource]}" />
+        <property name="lineAggregator">
+            <!-- An Aggregator which converts an object into delimited list of strings -->
+            <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+                <property name="delimiter" value="!" />
+                <property name="fieldExtractor">
+                    <!-- Extractor which returns the value of beans property through reflection -->
+                    <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+                        <property name="names" value="REF, PK_OBJ_IDT, RIO, RIOINI, REJET, ADR_RMT, ADR_TIR, CDEBPR, CDEBPR_RMT, AGE, AGE_RMT, AGE_RMT_LIB, CPT, CPTT, DTEMI, DTEREG, LOC, LOCT, MEM2, MNT, MODE_ESC, NSER, SQCA, RIB, RIBR, RSOC_RMT, RSOC_TIRE, RSOC_BEN, ZBK, ZBK_lib, NOMTIRE, CIN, RC, lieuEmission, MOTIF1, MOTIF2, MOTIF3, adresseTire, REJET_LIB, DTREJET, DTEINS, DTEPRE, DTEemission, DTETRT" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+ 
+ 
+    <!-- Optional JobExecutionListener to perform business logic before and after the job -->
+    <!-- <bean id="jobListener" class="com.ncrm.SprBatch.bpm.ImpChqBpmJobListener" /> -->
+ 
+    <!-- Optional ItemProcessor to perform business logic/filtering on the input records -->
+    <bean id="itemProcessor" class="com.ncrm.SprBatch.DataFilterProcessorImpChq" /> 
+ 
+    <!-- Step will need a transaction manager -->
+    <bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+ 
+    <!-- Job Extract Imp CHQ BPM -->
+    <batch:job id="jobExporterImpChqBAA">
+        <batch:step id="step1">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="databaseItemReaderCHQ" writer="flatFileItemWriterCHQ" processor="itemProcessor" commit-interval="10" />
+                   
+            </batch:tasklet>
+        </batch:step>
+        <!-- <batch:listeners>
+            <batch:listener ref="jobListener" />
+        </batch:listeners> -->
+    </batch:job>
+ 
+  <!-- ItemReader which reads from database and returns the row mapped by 
+        rowMapper -->
+    <bean id="databaseItemReaderLCN" class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+         <property name="dataSource" ref="basicDataSourceBaa_lcn" />
+         <property name="sql" value="#{jobParameters[req]}"/>
+             
+	<property name="rowMapper">
+		<bean class="com.ncrm.SprBatch.implcnBpmRowMapper" />
+	</property>
+ 
+    </bean>
+ 
+ 
+    <!-- ItemWriter writes a line into output flat file -->
+    <bean id="flatFileItemWriterLCN" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+        <property name="resource" value="file:#{jobParameters[resource]}" />
+        <property name="lineAggregator">
+            <!-- An Aggregator which converts an object into delimited list of strings -->
+            <bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+                <property name="delimiter" value="!" />
+                <property name="fieldExtractor">
+                    <!-- Extractor which returns the value of beans property through reflection -->
+                    <bean class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+                        <property name="names" value="REF, PK_OBJ_IDT, RIO, RIOINI, REJET, ADR_RMT, ADR_TIRE, CDEBPR, CDEBPR_RMT, AGE, AGE_RMT, AGE_RMT_LIB, CPT, CPTT, DTEEC, DTEMI, DTREG, LOC, LOCT, MEM2, MNT, MODE_ESC, NSER, RIB, RIBT, RSOC_RMT, RSOC_TIRE, RSOC_BEN, ZBK, ZBK_lib, NOMTIRE, CIN, RC, lieuEmission, MOTIF1, MOTIF2, MOTIF3, adresseTire, REJET_LIB, DTREJET, DTEINS, DTEPRE, DTEemission" />
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+ 
+ 
+    <!-- Optional JobExecutionListener to perform business logic before and after the job -->
+    <!-- <bean id="jobListener" class="com.ncrm.SprBatch.bpm.ImpChqBpmJobListener" /> -->
+ 
+    <!-- Optional ItemProcessor to perform business logic/filtering on the input records -->
+     <bean id="itemProcessorLCN" class="com.ncrm.SprBatch.DataFilterProcessorImpLcn" /> 
+ 
+    <!-- Step will need a transaction manager -->
+    <!-- <bean id="transactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" /> -->
+    <!-- Actual Job -->
+    <batch:job id="jobExporterImpLCNBAA">
+        <batch:step id="LCNstep1">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="databaseItemReaderLCN" writer="flatFileItemWriterLCN" processor="itemProcessorLCN" commit-interval="10" />
+                   <!--  processor="itemProcessor"  -->
+            </batch:tasklet>
+        </batch:step>
+        <!-- <batch:listeners>
+            <batch:listener ref="jobListener" />
+        </batch:listeners> -->
+    </batch:job>
+ 
+ 
+ 
+</beans>          
+
+

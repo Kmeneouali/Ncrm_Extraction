@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+        
+        <!-- ############################################################################## -->
+						<!-- Spring BATCH -->
+   <!-- ############################################################################## -->
+		<!-- stored job-meta in memory --> 
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+	</bean>
+ 	
+	<bean id="transactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+	 
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+		
+		
+		
+	
+	<!-- ################################################################" -->
+						<!-- IOC DAO & Metier -->
+    <!-- ################################################################" -->
+<context:annotation-config />
+<context:component-scan base-package="com.ncrm.dao" />
+	<bean name="daoo" class="com.ncrm.dao.daoImpl"></bean>
+	
+	<bean name="metier" class="com.ncrm.metier.MetierImpl">
+	<property name="dao" ref="daoo"></property>
+	</bean>	
+
+<import resource="ApplicationContexCFG.xml" />
+<import resource="ApplicationContexBPM.xml" />
+<import resource="ApplicationContexBAA.xml" />	
+<import resource="ApplicationContexSGMA.xml" />	
+<import resource="ApplicationContexLocal.xml" />
+	<!-- ################################################################" -->
+						<!--  Déclaration de la DATASOURCE -->
+    <!-- ################################################################" -->
+	
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://172.17.0.4:3306/r_ncrm_extraction" />
+		<property name="username" value="root" />
+		<property name="password" value="fast" />
+		 <property name="maxIdle" value="5"/>
+        <property name="maxActive" value="20"/>
+        <property name="minIdle" value="5"/>
+        <property name="validationQuery" value="SELECT 1"/>
+	</bean>
+
+
+	<!-- ################################################################" -->
+						<!--  Spring Security -->
+    <!-- ################################################################" -->
+
+<!-- 	<security:http auto-config="true">
+		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY"/>
+	  	<security:form-login login-page='/login.xhtml'/>	
+	  	<security:logout logout-success-url="/login" />
+	</security:http> -->
+
+<security:http auto-config="true">
+        <security:intercept-url pattern="/index.xhtml" access="IS_AUTHENTICATED_FULLY" />
+         <security:intercept-url pattern="/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <security:form-login login-page="/login.xhtml" default-target-url="/index.xhtml"
+            authentication-failure-url="/login.xhtml?status=error" />
+        
+        <security:logout logout-success-url="/login.xhtml?status=logout" />
+        
+          <security:session-management invalid-session-url="/login.xhtml">
+        <security:concurrency-control max-sessions="1" expired-url="/login.xhtml?status=logout" />
+    </security:session-management>
+      
+    </security:http>
+
+	<security:authentication-manager>	
+	<security:authentication-provider user-service-ref='myUserDetailsService' >
+	<security:password-encoder hash="md5" />
+	</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<bean id="myUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+  		<property name="dataSource" ref="dataSource"/>
+  		<property name="usersByUsernameQuery" value="SELECT username as username, password, enabled FROM users WHERE username = ?"/>
+  		<property name="authoritiesByUsernameQuery" value="SELECT username as username, authority FROM authorities WHERE username = ?"/>
+	</bean>  
+	
+
+
+</beans>

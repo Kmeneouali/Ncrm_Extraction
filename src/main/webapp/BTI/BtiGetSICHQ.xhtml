@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+
+	<h:title>NCRM-Extraction </h:title>
+
+</h:head>
+<h:body id="repoBrowse" class="" style="cursor: auto;">
+
+	<ui:composition template="/Layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<div class="content">
+				<div class="header ">
+					<div class="title">
+						<h2>
+							<h:outputText value="BTI-#{commun['GetSIChq']}" />
+							
+						</h2>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div id="resultsContainer" class="body">
+
+
+
+
+
+					<div
+						style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%">
+						<h:form id="form1">
+							
+							<p:ajaxStatus onstart="PF('statusDialog').show()"
+								onsuccess="PF('statusDialog').hide()" />
+
+							<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+								closable="false" resizable="false" showHeader="false">
+								<p:graphicImage name="images/progressbar.gif" />
+							</p:dialog>
+
+
+							<!-- Panel 1 -->
+
+							<p:panel id="horizontal" header="#{commun['listSI']}"
+								toggleable="true" style="  margin-bottom:5px">
+
+								<!-- Panel Searsh  -->
+								<p:panelGrid
+									style="margin: 0 auto">
+
+									<p:row>
+
+										<p:column style="border-color: #ffffff ;">
+											<p:outputLabel 
+												value="#{commun['dtetr']}" />
+										</p:column>
+										<p:column style="border-color: #ffffff ;">
+										<p:calendar id="button" value="#{ManagedBeanSIChq.dateTr}" pattern="dd-MM-yyyy" mask="true" />
+										</p:column>
+
+        
+
+										<p:column style="border-color: #ffffff ;">
+											<p:commandButton icon="ui-icon-search "
+												value="#{commun['btnSearch']}" style=""
+												title="#{commun['btnSearch']}"
+												actionListener="#{ManagedBeanSIChq.searchbydate('BTI')}"
+												update=":form1:listSIrem"	>
+												</p:commandButton>
+											
+
+
+
+										</p:column>
+
+									</p:row>
+
+								</p:panelGrid>
+
+<p:messages id="messages" showDetail="true" autoUpdate="true" closable="false" style="width: 90%; margin-right: 5%; margin-left: 5%; margin-top: 1%" />
+								
+
+
+
+
+								<p:dataTable id="listSIrem" var="rem"
+									value="#{ManagedBeanSIChq.listRems}" emptyMessage="" rows="10"
+									paginator="true"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+ 
+ 
+ <p:column 
+										headerText="#{commun['dtetr']}" style="width:15%;text-align:center">
+										<h:outputText value="#{rem.DATETR}" />
+									</p:column>
+ <p:column 
+										headerText="#{commun['NumcptRem']}" style="text-align:center">
+										<h:outputText value="#{rem.bmtr_CPTREM}" />
+									</p:column>
+ 
+ 
+ <p:column   headerText="#{commun['NumRemise']}" style="width:10%;text-align:center">
+										<h:outputText value="#{rem.bmtr_REFREM}"  />
+									</p:column>
+
+<p:column 
+										headerText="#{commun['NbrCheque']}" style="width:10%;text-align:center">
+										<h:outputText value="#{rem.bmtr_NBRVALEUR}"/>
+									</p:column>
+        
+<p:column 
+										headerText="#{commun['MntTotal']}" style="width:15%;text-align:right">
+										<h:outputText value="#{rem.bmtr_MNTCALCULER}"/>
+									</p:column>
+       
+
+       
+
+								</p:dataTable>
+								
+							</p:panel>
+
+
+													</h:form>
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+
+
+			
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
+
+
